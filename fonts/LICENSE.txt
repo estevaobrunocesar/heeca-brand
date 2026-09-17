@@ -1,0 +1,3 @@
+Montserrat (Julieta Ulanovsky et al.) — SIL Open Font License 1.1.
+Usada apenas para converter o wordmark em curvas no build; os arquivos gerados não dependem da fonte.
+https://openfontlicense.org

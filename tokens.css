@@ -1,0 +1,27 @@
+/* Paleta de marca Heeca — fonte da verdade das cores compartilhadas.
+   Os produtos trocam SÓ o acento; tinta, papel e neutros são comuns.
+   Contraste sobre branco: heeca 4,5:1 · ticket 4,6:1 · budget 4,6:1 · schedule 3,2:1
+   (o laranja não serve para texto corrido pequeno — use --heeca-schedule-dark nesse caso). */
+:root {
+  --heeca-ink: #0a0a0a;
+  --heeca-paper: #ffffff;
+
+  --heeca-brand: #e50914;
+  --heeca-brand-dark: #b20b12;
+  --heeca-brand-soft: #fdecec;
+
+  --heeca-ticket: #0a6ee6;
+  --heeca-ticket-dark: #0857b8;
+  --heeca-ticket-soft: #e8f1fd;
+
+  --heeca-schedule: #f06511;
+  --heeca-schedule-dark: #c4500c;
+  --heeca-schedule-soft: #fdeee4;
+
+  --heeca-budget: #0f8a5f;
+  --heeca-budget-dark: #0b6b4a;
+  --heeca-budget-soft: #e4f4ed;
+  --heeca-vendas: #6d28d9;
+  --heeca-vendas-dark: #5b21b6;
+  --heeca-vendas-soft: #efe9fb;
+}
