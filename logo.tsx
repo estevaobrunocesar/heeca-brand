@@ -20,6 +20,8 @@ export const HEECA_PRODUCTS = {
   schedule: { name: "Dental", color: "#f06511", fullName: "Heeca Dental" },
   budget: { name: "Orçamento", color: "#0f8a5f", fullName: "Heeca Orçamento" },
   vendas: { name: "Vendas", color: "#6d28d9", fullName: "Heeca Vendas" },
+  nail: { name: "Nail", color: "#c8306f", fullName: "Heeca Nail" },
+  barbearia: { name: "Barbearia", color: "#a86618", fullName: "Heeca Barbearia" },
 } as const;
 export type HeecaProduct = keyof typeof HEECA_PRODUCTS;
 export const SLOGAN = "Sistemas que fazem o seu negócio evoluir.";

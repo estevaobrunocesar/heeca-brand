@@ -27,6 +27,8 @@ export const PRODUCTS = [
   { key: "schedule", name: "Dental", file: "dental", color: "#f06511" },
   { key: "budget", name: "Orçamento", file: "orcamento", color: "#0f8a5f" },
   { key: "vendas", name: "Vendas", color: "#6d28d9" },
+  { key: "nail", name: "Nail", color: "#c8306f" },
+  { key: "barbearia", name: "Barbearia", color: "#a86618" },
 ];
 
 const svgDoc = (w, h, inner, extra = "") =>
