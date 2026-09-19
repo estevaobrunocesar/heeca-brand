@@ -14,14 +14,134 @@
  */
 import type { CSSProperties } from "react";
 
+/** Famílias (a cor é da família; os produtos herdam). Fonte: brand/products.mjs. */
+export const HEECA_FAMILIES = {
+  platform: { label: "Plataforma", color: "#e50914", engine: "portal" },
+  ops: { label: "Atendimento e operações", color: "#0a6ee6", engine: "Ticket" },
+  finance: { label: "Financeiro", color: "#0f8a5f", engine: "Invoice" },
+  beauty: { label: "Beleza, estética e cuidados pessoais", color: "#c8306f", engine: "Schedule" },
+  health: { label: "Saúde, terapias e bem-estar", color: "#f06511", engine: "Schedule" },
+  food: { label: "Alimentação e pequenos estabelecimentos", color: "#b45309", engine: "Commerce" },
+  service: { label: "Profissionais autônomos", color: "#0e7490", engine: "Service" },
+  education: { label: "Educação e aulas particulares", color: "#1e3a8a", engine: "Schedule" },
+  pet: { label: "Pet services", color: "#4d7c0f", engine: "Schedule" },
+  home: { label: "Casa e construção", color: "#57534e", engine: "Service" },
+  fashion: { label: "Moda, costura e personalização", color: "#86198f", engine: "Commerce" },
+  events: { label: "Eventos e profissionais criativos", color: "#881337", engine: "Service" },
+  commerce: { label: "Comércio local", color: "#6d28d9", engine: "Commerce" },
+} as const;
+export type HeecaFamily = keyof typeof HEECA_FAMILIES;
+
+/** Produtos (fonte: brand/products.csv). sigla é única na plataforma; color = cor da família. */
 export const HEECA_PRODUCTS = {
-  heeca: { name: "", color: "#e50914", fullName: "Heeca" },
-  ticket: { name: "Ticket", color: "#0a6ee6", fullName: "Heeca Ticket" },
-  dental: { name: "Dental", color: "#f06511", fullName: "Heeca Dental" },
-  invoice: { name: "Invoice", color: "#0f8a5f", fullName: "Heeca Invoice" },
-  store: { name: "Store", color: "#6d28d9", fullName: "Heeca Store" },
-  nail: { name: "Nail", color: "#c8306f", fullName: "Heeca Nail" },
-  cut: { name: "Cut", color: "#a86618", fullName: "Heeca Cut" },
+  "heeca": { name: "", color: "#e50914", fullName: "Heeca", family: "platform", sigla: "" },
+  "ticket": { name: "Ticket", color: "#0a6ee6", fullName: "Heeca Ticket", family: "ops", sigla: "Ti" },
+  "invoice": { name: "Invoice", color: "#0f8a5f", fullName: "Heeca Invoice", family: "finance", sigla: "In" },
+  "dental": { name: "Dental", color: "#f06511", fullName: "Heeca Dental", family: "health", sigla: "De" },
+  "store": { name: "Store", color: "#6d28d9", fullName: "Heeca Store", family: "commerce", sigla: "St" },
+  "nail": { name: "Nail", color: "#c8306f", fullName: "Heeca Nail", family: "beauty", sigla: "Na" },
+  "cut": { name: "Cut", color: "#c8306f", fullName: "Heeca Cut", family: "beauty", sigla: "Cu" },
+  "beauty": { name: "Beauty", color: "#c8306f", fullName: "Heeca Beauty", family: "beauty", sigla: "Be" },
+  "lash": { name: "Lash", color: "#c8306f", fullName: "Heeca Lash", family: "beauty", sigla: "La" },
+  "brow": { name: "Brow", color: "#c8306f", fullName: "Heeca Brow", family: "beauty", sigla: "Br" },
+  "skin": { name: "Skin", color: "#c8306f", fullName: "Heeca Skin", family: "beauty", sigla: "Sk" },
+  "ink": { name: "Ink", color: "#c8306f", fullName: "Heeca Ink", family: "beauty", sigla: "Ik" },
+  "piercing": { name: "Piercing", color: "#c8306f", fullName: "Heeca Piercing", family: "beauty", sigla: "Pi" },
+  "spa": { name: "Spa", color: "#c8306f", fullName: "Heeca Spa", family: "beauty", sigla: "Sp" },
+  "makeup": { name: "Makeup", color: "#c8306f", fullName: "Heeca Makeup", family: "beauty", sigla: "Ma" },
+  "barber": { name: "Barber", color: "#c8306f", fullName: "Heeca Barber", family: "beauty", sigla: "Ba" },
+  "tan": { name: "Tan", color: "#c8306f", fullName: "Heeca Tan", family: "beauty", sigla: "Ta" },
+  "massage": { name: "Massage", color: "#c8306f", fullName: "Heeca Massage", family: "beauty", sigla: "Ms" },
+  "move": { name: "Move", color: "#f06511", fullName: "Heeca Move", family: "health", sigla: "Mo" },
+  "mind": { name: "Mind", color: "#f06511", fullName: "Heeca Mind", family: "health", sigla: "Mi" },
+  "nutri": { name: "Nutri", color: "#f06511", fullName: "Heeca Nutri", family: "health", sigla: "Nu" },
+  "med": { name: "Med", color: "#f06511", fullName: "Heeca Med", family: "health", sigla: "Me" },
+  "physio": { name: "Physio", color: "#f06511", fullName: "Heeca Physio", family: "health", sigla: "Ph" },
+  "pilates": { name: "Pilates", color: "#f06511", fullName: "Heeca Pilates", family: "health", sigla: "Pl" },
+  "yoga": { name: "Yoga", color: "#f06511", fullName: "Heeca Yoga", family: "health", sigla: "Yo" },
+  "therapy": { name: "Therapy", color: "#f06511", fullName: "Heeca Therapy", family: "health", sigla: "Th" },
+  "speech": { name: "Speech", color: "#f06511", fullName: "Heeca Speech", family: "health", sigla: "Sc" },
+  "ergo": { name: "Ergo", color: "#f06511", fullName: "Heeca Ergo", family: "health", sigla: "Er" },
+  "vet": { name: "Vet", color: "#f06511", fullName: "Heeca Vet", family: "health", sigla: "Ve" },
+  "petcare": { name: "PetCare", color: "#f06511", fullName: "Heeca PetCare", family: "health", sigla: "Pe" },
+  "food": { name: "Food", color: "#b45309", fullName: "Heeca Food", family: "food", sigla: "Fo" },
+  "menu": { name: "Menu", color: "#b45309", fullName: "Heeca Menu", family: "food", sigla: "Mn" },
+  "delivery": { name: "Delivery", color: "#b45309", fullName: "Heeca Delivery", family: "food", sigla: "Dl" },
+  "bakery": { name: "Bakery", color: "#b45309", fullName: "Heeca Bakery", family: "food", sigla: "Bk" },
+  "cake": { name: "Cake", color: "#b45309", fullName: "Heeca Cake", family: "food", sigla: "Ca" },
+  "sweet": { name: "Sweet", color: "#b45309", fullName: "Heeca Sweet", family: "food", sigla: "Sw" },
+  "pizza": { name: "Pizza", color: "#b45309", fullName: "Heeca Pizza", family: "food", sigla: "Pz" },
+  "burger": { name: "Burger", color: "#b45309", fullName: "Heeca Burger", family: "food", sigla: "Bu" },
+  "coffee": { name: "Coffee", color: "#b45309", fullName: "Heeca Coffee", family: "food", sigla: "Co" },
+  "marmita": { name: "Marmita", color: "#b45309", fullName: "Heeca Marmita", family: "food", sigla: "Mr" },
+  "catering": { name: "Catering", color: "#b45309", fullName: "Heeca Catering", family: "food", sigla: "Ct" },
+  "order": { name: "Order", color: "#b45309", fullName: "Heeca Order", family: "food", sigla: "Or" },
+  "fix": { name: "Fix", color: "#0e7490", fullName: "Heeca Fix", family: "service", sigla: "Fi" },
+  "plumb": { name: "Plumb", color: "#0e7490", fullName: "Heeca Plumb", family: "service", sigla: "Pm" },
+  "repair": { name: "Repair", color: "#0e7490", fullName: "Heeca Repair", family: "service", sigla: "Re" },
+  "clean": { name: "Clean", color: "#0e7490", fullName: "Heeca Clean", family: "service", sigla: "Cl" },
+  "garden": { name: "Garden", color: "#0e7490", fullName: "Heeca Garden", family: "service", sigla: "Ga" },
+  "pool": { name: "Pool", color: "#0e7490", fullName: "Heeca Pool", family: "service", sigla: "Po" },
+  "air": { name: "Air", color: "#0e7490", fullName: "Heeca Air", family: "service", sigla: "Ai" },
+  "solar": { name: "Solar", color: "#0e7490", fullName: "Heeca Solar", family: "service", sigla: "So" },
+  "tech": { name: "Tech", color: "#0e7490", fullName: "Heeca Tech", family: "service", sigla: "Te" },
+  "auto": { name: "Auto", color: "#0e7490", fullName: "Heeca Auto", family: "service", sigla: "Au" },
+  "detail": { name: "Detail", color: "#0e7490", fullName: "Heeca Detail", family: "service", sigla: "Dt" },
+  "wash": { name: "Wash", color: "#0e7490", fullName: "Heeca Wash", family: "service", sigla: "Wa" },
+  "glass": { name: "Glass", color: "#0e7490", fullName: "Heeca Glass", family: "service", sigla: "Gl" },
+  "locksmith": { name: "Locksmith", color: "#0e7490", fullName: "Heeca Locksmith", family: "service", sigla: "Lo" },
+  "cargo": { name: "Cargo", color: "#0e7490", fullName: "Heeca Cargo", family: "service", sigla: "Cr" },
+  "class": { name: "Class", color: "#1e3a8a", fullName: "Heeca Class", family: "education", sigla: "Cs" },
+  "tutor": { name: "Tutor", color: "#1e3a8a", fullName: "Heeca Tutor", family: "education", sigla: "Tu" },
+  "music": { name: "Music", color: "#1e3a8a", fullName: "Heeca Music", family: "education", sigla: "Mu" },
+  "language": { name: "Language", color: "#1e3a8a", fullName: "Heeca Language", family: "education", sigla: "Ln" },
+  "dance": { name: "Dance", color: "#1e3a8a", fullName: "Heeca Dance", family: "education", sigla: "Da" },
+  "art": { name: "Art", color: "#1e3a8a", fullName: "Heeca Art", family: "education", sigla: "Ar" },
+  "coach": { name: "Coach", color: "#1e3a8a", fullName: "Heeca Coach", family: "education", sigla: "Cc" },
+  "training": { name: "Training", color: "#1e3a8a", fullName: "Heeca Training", family: "education", sigla: "Tr" },
+  "academy": { name: "Academy", color: "#1e3a8a", fullName: "Heeca Academy", family: "education", sigla: "Ac" },
+  "kids": { name: "Kids", color: "#1e3a8a", fullName: "Heeca Kids", family: "education", sigla: "Ki" },
+  "pet": { name: "Pet", color: "#4d7c0f", fullName: "Heeca Pet", family: "pet", sigla: "Pt" },
+  "groom": { name: "Groom", color: "#4d7c0f", fullName: "Heeca Groom", family: "pet", sigla: "Gr" },
+  "dog": { name: "Dog", color: "#4d7c0f", fullName: "Heeca Dog", family: "pet", sigla: "Do" },
+  "stay": { name: "Stay", color: "#4d7c0f", fullName: "Heeca Stay", family: "pet", sigla: "Sa" },
+  "care": { name: "Care", color: "#4d7c0f", fullName: "Heeca Care", family: "pet", sigla: "Ce" },
+  "k9": { name: "K9", color: "#4d7c0f", fullName: "Heeca K9", family: "pet", sigla: "K9" },
+  "build": { name: "Build", color: "#57534e", fullName: "Heeca Build", family: "home", sigla: "Bl" },
+  "reform": { name: "Reform", color: "#57534e", fullName: "Heeca Reform", family: "home", sigla: "Rf" },
+  "paint": { name: "Paint", color: "#57534e", fullName: "Heeca Paint", family: "home", sigla: "Pa" },
+  "wood": { name: "Wood", color: "#57534e", fullName: "Heeca Wood", family: "home", sigla: "Wo" },
+  "furniture": { name: "Furniture", color: "#57534e", fullName: "Heeca Furniture", family: "home", sigla: "Fu" },
+  "decor": { name: "Decor", color: "#57534e", fullName: "Heeca Decor", family: "home", sigla: "Dc" },
+  "arch": { name: "Arch", color: "#57534e", fullName: "Heeca Arch", family: "home", sigla: "Ah" },
+  "interior": { name: "Interior", color: "#57534e", fullName: "Heeca Interior", family: "home", sigla: "It" },
+  "movers": { name: "Movers", color: "#57534e", fullName: "Heeca Movers", family: "home", sigla: "Mv" },
+  "maid": { name: "Maid", color: "#57534e", fullName: "Heeca Maid", family: "home", sigla: "Md" },
+  "security": { name: "Security", color: "#57534e", fullName: "Heeca Security", family: "home", sigla: "Se" },
+  "sew": { name: "Sew", color: "#86198f", fullName: "Heeca Sew", family: "fashion", sigla: "Sew" },
+  "tailor": { name: "Tailor", color: "#86198f", fullName: "Heeca Tailor", family: "fashion", sigla: "Tl" },
+  "dress": { name: "Dress", color: "#86198f", fullName: "Heeca Dress", family: "fashion", sigla: "Dr" },
+  "stitch": { name: "Stitch", color: "#86198f", fullName: "Heeca Stitch", family: "fashion", sigla: "Si" },
+  "print": { name: "Print", color: "#86198f", fullName: "Heeca Print", family: "fashion", sigla: "Pr" },
+  "custom": { name: "Custom", color: "#86198f", fullName: "Heeca Custom", family: "fashion", sigla: "Cm" },
+  "atelier": { name: "Atelier", color: "#86198f", fullName: "Heeca Atelier", family: "fashion", sigla: "At" },
+  "event": { name: "Event", color: "#881337", fullName: "Heeca Event", family: "events", sigla: "Ev" },
+  "photo": { name: "Photo", color: "#881337", fullName: "Heeca Photo", family: "events", sigla: "Pho" },
+  "video": { name: "Video", color: "#881337", fullName: "Heeca Video", family: "events", sigla: "Vi" },
+  "party": { name: "Party", color: "#881337", fullName: "Heeca Party", family: "events", sigla: "Py" },
+  "sound": { name: "Sound", color: "#881337", fullName: "Heeca Sound", family: "events", sigla: "Sn" },
+  "wedding": { name: "Wedding", color: "#881337", fullName: "Heeca Wedding", family: "events", sigla: "We" },
+  "studio": { name: "Studio", color: "#881337", fullName: "Heeca Studio", family: "events", sigla: "Sd" },
+  "rental": { name: "Rental", color: "#881337", fullName: "Heeca Rental", family: "events", sigla: "Rn" },
+  "fashion": { name: "Fashion", color: "#6d28d9", fullName: "Heeca Fashion", family: "commerce", sigla: "Fa" },
+  "shoes": { name: "Shoes", color: "#6d28d9", fullName: "Heeca Shoes", family: "commerce", sigla: "Sh" },
+  "boutique": { name: "Boutique", color: "#6d28d9", fullName: "Heeca Boutique", family: "commerce", sigla: "Bo" },
+  "gift": { name: "Gift", color: "#6d28d9", fullName: "Heeca Gift", family: "commerce", sigla: "Gi" },
+  "parts": { name: "Parts", color: "#6d28d9", fullName: "Heeca Parts", family: "commerce", sigla: "Ps" },
+  "material": { name: "Material", color: "#6d28d9", fullName: "Heeca Material", family: "commerce", sigla: "Mt" },
+  "office": { name: "Office", color: "#6d28d9", fullName: "Heeca Office", family: "commerce", sigla: "Of" },
+  "market": { name: "Market", color: "#6d28d9", fullName: "Heeca Market", family: "commerce", sigla: "Mk" },
+  "flor": { name: "Flor", color: "#6d28d9", fullName: "Heeca Flor", family: "commerce", sigla: "Fl" },
 } as const;
 export type HeecaProduct = keyof typeof HEECA_PRODUCTS;
 export const SLOGAN = "Sistemas que fazem o seu negócio evoluir.";
@@ -97,6 +217,44 @@ export function Logo({ product = "heeca", variant = "horizontal", onDark = false
         {slogan ? <span style={sloganStyle}>{SLOGAN}</span> : null}
       </span>
     </span>
+  );
+}
+
+/**
+ * Ícone de app/produto (o mesmo desenho de dist/icon): fundo na cor da família, sigla branca e o
+ * símbolo HC pequeno. A plataforma ("heeca") usa fundo escuro com o símbolo grande.
+ * Uso: mapa do ecossistema, seletor de produtos, avatar do produto em listas.
+ */
+export function HeecaAppIcon({ product, size = 48, radius = 22.5, className, style }: { product: HeecaProduct; size?: number; radius?: number; className?: string; style?: CSSProperties }) {
+  const p = HEECA_PRODUCTS[product];
+  if (!p.name) {
+    const s = 0.62;
+    return (
+      <svg viewBox="0 0 100 100" width={size} height={size} className={className} style={style} role="img" aria-label="Heeca">
+        <rect width="100" height="100" rx={radius} fill="#0a0a0a" />
+        <g transform={`translate(${((100 - VIEW.w * s) / 2).toFixed(2)} ${((100 - VIEW.h * s) / 2).toFixed(2)}) scale(${s})`}>
+          <path d={D.cBase} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+          <rect x={10} y={6} width={17} height={88} rx={1.5} fill={SILVER} />
+          <rect x={62} y={6} width={17} height={88} rx={1.5} fill={SILVER} />
+          <path d={D.swoosh} fill={p.color} />
+          <path d={D.topArm} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+        </g>
+      </svg>
+    );
+  }
+  const fs = p.sigla.length > 2 ? 40 : 50;
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} className={className} style={style} role="img" aria-label={p.fullName}>
+      <rect width="100" height="100" rx={radius} fill={p.color} />
+      <text x="47" y="66" textAnchor="middle" fontFamily={BRAND_FONT} fontWeight={700} fontSize={fs} letterSpacing="-0.04em" fill="#fff">{p.sigla}</text>
+      <g transform="translate(66 75) scale(0.2)" opacity={0.92}>
+        <path d={D.cBase} fill="none" stroke="#fff" strokeWidth={SW} strokeLinecap="round" />
+        <rect x={10} y={6} width={17} height={88} rx={1.5} fill="#fff" />
+        <rect x={62} y={6} width={17} height={88} rx={1.5} fill="#fff" />
+        <path d={D.swoosh} fill="#fff" />
+        <path d={D.topArm} fill="none" stroke="#fff" strokeWidth={SW} strokeLinecap="round" />
+      </g>
+    </svg>
   );
 }
 

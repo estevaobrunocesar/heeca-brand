@@ -7,29 +7,21 @@
 // monocromáticas, ícones de app, favicons (PNG + .ico), Open Graph, SVG animado e o componente
 // React (logo.tsx). Nunca edite dist/ nem logo.tsx à mão.
 //
-// Produto novo = uma linha em PRODUCTS.
+// Produto novo = uma linha em products.csv (ver products.mjs: família → cor, sigla gerada, status).
 
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
 import opentype from "opentype.js";
 import { VIEW, COLORS, PATHS, SWOOSH_CENTER, symbolInner } from "./geometry.mjs";
+import { PRODUCTS, FAMILIES, WARNINGS } from "./products.mjs";
+if (WARNINGS.length) { console.warn("products.csv:"); WARNINGS.forEach((w) => console.warn("  - " + w)); }
 
 const OUT = "dist";
 const { silver: SILVER, graphite: GRAPHITE, ink: INK, white: WHITE } = COLORS;
 export const SLOGAN = ["Sistemas que fazem", "o seu negócio evoluir."];
 
-// Cor de cada produto. O nome vazio é a plataforma (heeca.com.br). `key` é o identificador de código
-// (não muda); `file` (opcional) é o slug dos arquivos gerados quando o nome comercial difere da chave.
-export const PRODUCTS = [
-  { key: "heeca", name: "", color: COLORS.red },
-  { key: "ticket", name: "Ticket", color: "#0a6ee6" },
-  { key: "dental", name: "Dental", file: "dental", color: "#f06511" },
-  { key: "invoice", name: "Invoice", color: "#0f8a5f" },
-  { key: "store", name: "Store", color: "#6d28d9" },
-  { key: "nail", name: "Nail", color: "#c8306f" },
-  { key: "cut", name: "Cut", color: "#a86618" },
-];
+export { PRODUCTS, FAMILIES };
 
 const svgDoc = (w, h, inner, extra = "") =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${extra}>${inner}</svg>\n`;
@@ -117,12 +109,25 @@ function verticalFile(product, o, { slogan = true } = {}) {
   return svgDoc(+width.toFixed(2), +(bottom + PAD).toFixed(2), inner);
 }
 
-/** Ícone de app: fundo quase-preto, símbolo prata + cor do produto a ~62 %. */
-function appIconSvg(accent, { rounded = false, bg = INK } = {}) {
+/** Ícone da plataforma: fundo quase-preto, símbolo HC prata + vermelho a ~62 %. */
+function platformIconSvg(accent, { rounded = false, bg = INK } = {}) {
   const rx = rounded ? ' rx="22.5"' : "";
   const s = 0.62, ox = (100 - VIEW.w * s) / 2, oy = (100 - VIEW.h * s) / 2;
   return svgDoc(100, 100, `<rect width="100" height="100"${rx} fill="${bg}"/><g transform="translate(${ox.toFixed(2)} ${oy.toFixed(2)}) scale(${s})">${symbolSvg({ h: SILVER, accent })}</g>`);
 }
+/**
+ * Ícone de produto (sistema de 100+): fundo na cor da FAMÍLIA, sigla branca (Montserrat 700) e o
+ * símbolo HC pequeno no canto — o produto se distingue pela sigla, a família pela cor, a Heeca pelo HC.
+ */
+function productIconSvg(p, { rounded = false } = {}) {
+  const rx = rounded ? ' rx="22.5"' : "";
+  const fs = p.sigla.length > 2 ? 40 : 50;
+  const w = bold.getAdvanceWidth(p.sigla, fs, { letterSpacing: -0.04, kerning: true });
+  const d = bold.getPath(p.sigla, (100 - w) / 2 - 3, 66, fs, { letterSpacing: -0.04, kerning: true }).toPathData(2);
+  const mini = `<g transform="translate(66 75) scale(0.2)" opacity="0.92">${symbolSvg({ h: WHITE, accent: WHITE })}</g>`;
+  return svgDoc(100, 100, `<rect width="100" height="100"${rx} fill="${p.color}"/><path d="${d}" fill="${WHITE}"/>${mini}`);
+}
+const appIconSvg = (p, opts) => (p.name ? productIconSvg(p, opts) : platformIconSvg(p.color, opts));
 
 /** Open Graph 1200 × 630: fundo quase-preto, assinatura horizontal com slogan. */
 function ogSvg(product) {
@@ -191,7 +196,8 @@ function animatedSvg(product, o) {
 // ---------------------------------------------------------------------------
 function logoTsx() {
   const s = PATHS.stem, rs = PATHS.stemR;
-  const products = PRODUCTS.map((p) => `  ${p.key}: { name: ${JSON.stringify(p.name)}, color: ${JSON.stringify(p.color)}, fullName: ${JSON.stringify(p.name ? `Heeca ${p.name}` : "Heeca")} },`).join("\n");
+  const products = PRODUCTS.map((p) => `  ${JSON.stringify(p.key)}: { name: ${JSON.stringify(p.name)}, color: ${JSON.stringify(p.color)}, fullName: ${JSON.stringify(p.name ? `Heeca ${p.name}` : "Heeca")}, family: ${JSON.stringify(p.family)}, sigla: ${JSON.stringify(p.sigla)} },`).join("\n");
+  const families = Object.entries(FAMILIES).map(([k, f]) => `  ${k}: { label: ${JSON.stringify(f.label)}, color: ${JSON.stringify(f.color)}, engine: ${JSON.stringify(f.engine)} },`).join("\n");
   return `/**
  * Marca Heeca — componente compartilhado entre o portal e os produtos.
  * GERADO por brand/build.mjs a partir de brand/geometry.mjs — não edite; rode \`pnpm build\` em brand/.
@@ -208,6 +214,13 @@ function logoTsx() {
  */
 import type { CSSProperties } from "react";
 
+/** Famílias (a cor é da família; os produtos herdam). Fonte: brand/products.mjs. */
+export const HEECA_FAMILIES = {
+${families}
+} as const;
+export type HeecaFamily = keyof typeof HEECA_FAMILIES;
+
+/** Produtos (fonte: brand/products.csv). sigla é única na plataforma; color = cor da família. */
 export const HEECA_PRODUCTS = {
 ${products}
 } as const;
@@ -289,6 +302,44 @@ export function Logo({ product = "heeca", variant = "horizontal", onDark = false
 }
 
 /**
+ * Ícone de app/produto (o mesmo desenho de dist/icon): fundo na cor da família, sigla branca e o
+ * símbolo HC pequeno. A plataforma ("heeca") usa fundo escuro com o símbolo grande.
+ * Uso: mapa do ecossistema, seletor de produtos, avatar do produto em listas.
+ */
+export function HeecaAppIcon({ product, size = 48, radius = 22.5, className, style }: { product: HeecaProduct; size?: number; radius?: number; className?: string; style?: CSSProperties }) {
+  const p = HEECA_PRODUCTS[product];
+  if (!p.name) {
+    const s = 0.62;
+    return (
+      <svg viewBox="0 0 100 100" width={size} height={size} className={className} style={style} role="img" aria-label="Heeca">
+        <rect width="100" height="100" rx={radius} fill="#0a0a0a" />
+        <g transform={\`translate(\${((100 - VIEW.w * s) / 2).toFixed(2)} \${((100 - VIEW.h * s) / 2).toFixed(2)}) scale(\${s})\`}>
+          <path d={D.cBase} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+          <rect x={10} y={6} width={17} height={88} rx={1.5} fill={SILVER} />
+          <rect x={62} y={6} width={17} height={88} rx={1.5} fill={SILVER} />
+          <path d={D.swoosh} fill={p.color} />
+          <path d={D.topArm} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+        </g>
+      </svg>
+    );
+  }
+  const fs = p.sigla.length > 2 ? 40 : 50;
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} className={className} style={style} role="img" aria-label={p.fullName}>
+      <rect width="100" height="100" rx={radius} fill={p.color} />
+      <text x="47" y="66" textAnchor="middle" fontFamily={BRAND_FONT} fontWeight={700} fontSize={fs} letterSpacing="-0.04em" fill="#fff">{p.sigla}</text>
+      <g transform="translate(66 75) scale(0.2)" opacity={0.92}>
+        <path d={D.cBase} fill="none" stroke="#fff" strokeWidth={SW} strokeLinecap="round" />
+        <rect x={10} y={6} width={17} height={88} rx={1.5} fill="#fff" />
+        <rect x={62} y={6} width={17} height={88} rx={1.5} fill="#fff" />
+        <path d={D.swoosh} fill="#fff" />
+        <path d={D.topArm} fill="none" stroke="#fff" strokeWidth={SW} strokeLinecap="round" />
+      </g>
+    </svg>
+  );
+}
+
+/**
  * Abertura animada (~3,5 s): 1. H surge · 2. C se forma · 3. conexão (swoosh) · 4. nome revela.
  * Respeita prefers-reduced-motion (mostra o estado final). Use em splash/login; não em cabeçalhos.
  */
@@ -365,6 +416,10 @@ write("symbol/heeca-symbol-white.svg", symbolFile(monoWhite));
 
 for (const p of PRODUCTS) {
   const k = p.file ?? p.key;
+  const iconSvg = appIconSvg(p);
+  write(`icon/heeca-${k}-app-icon.svg`, appIconSvg(p, { rounded: true }));
+  write(`icon/heeca-${k}-app-icon-192.png`, await png(iconSvg, 192));
+  if (p.status === "planned") continue; // planejados: só o ícone (para o mapa do ecossistema)
   write(`symbol/heeca-symbol-${k}-on-dark.svg`, symbolFile(onDark(p)));
   write(`symbol/heeca-symbol-${k}.svg`, symbolFile(onLight(p)));
   write(`logo/heeca-${k}-principal-on-dark.svg`, verticalFile(p, onDark(p)));
@@ -377,14 +432,12 @@ for (const p of PRODUCTS) {
   write(`logo/heeca-${k}-horizontal-slogan.svg`, horizontalFile(p, onLight(p), { slogan: true }));
   write(`logo/heeca-${k}-horizontal-black.svg`, horizontalFile({ ...p, color: INK }, monoBlack));
   write(`logo/heeca-${k}-horizontal-white.svg`, horizontalFile({ ...p, color: WHITE }, monoWhite));
-  const iconSvg = appIconSvg(p.color);
-  write(`icon/heeca-${k}-app-icon.svg`, appIconSvg(p.color, { rounded: true }));
-  for (const size of [512, 192, 180]) write(`icon/heeca-${k}-app-icon-${size}.png`, await png(iconSvg, size));
+  for (const size of [512, 180]) write(`icon/heeca-${k}-app-icon-${size}.png`, await png(iconSvg, size));
   // Favicons: símbolo sobre fundo escuro (em 16 px o símbolo precisa do contraste do fundo)
   const favs = [];
   for (const size of [16, 32, 48]) { const buf = await png(iconSvg, size); write(`favicon/heeca-${k}-${size}.png`, buf); favs.push({ size, buf }); }
   write(`favicon/heeca-${k}.ico`, ico(favs));
-  write(`favicon/heeca-${k}.svg`, appIconSvg(p.color, { rounded: true }));
+  write(`favicon/heeca-${k}.svg`, appIconSvg(p, { rounded: true }));
   write(`social/heeca-${k}-og.png`, await sharp(Buffer.from(ogSvg(p)), { density: 96 }).png({ compressionLevel: 9 }).toBuffer());
   write(`animated/heeca-${k}-intro-on-dark.svg`, animatedSvg(p, onDark(p)));
   write(`animated/heeca-${k}-intro.svg`, animatedSvg(p, onLight(p)));
