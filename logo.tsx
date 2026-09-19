@@ -18,10 +18,10 @@ export const HEECA_PRODUCTS = {
   heeca: { name: "", color: "#e50914", fullName: "Heeca" },
   ticket: { name: "Ticket", color: "#0a6ee6", fullName: "Heeca Ticket" },
   dental: { name: "Dental", color: "#f06511", fullName: "Heeca Dental" },
-  budget: { name: "Orçamento", color: "#0f8a5f", fullName: "Heeca Orçamento" },
-  vendas: { name: "Vendas", color: "#6d28d9", fullName: "Heeca Vendas" },
+  invoice: { name: "Invoice", color: "#0f8a5f", fullName: "Heeca Invoice" },
+  store: { name: "Store", color: "#6d28d9", fullName: "Heeca Store" },
   nail: { name: "Nail", color: "#c8306f", fullName: "Heeca Nail" },
-  barbearia: { name: "Barbearia", color: "#a86618", fullName: "Heeca Barbearia" },
+  cut: { name: "Cut", color: "#a86618", fullName: "Heeca Cut" },
 } as const;
 export type HeecaProduct = keyof typeof HEECA_PRODUCTS;
 export const SLOGAN = "Sistemas que fazem o seu negócio evoluir.";
