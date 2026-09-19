@@ -24,7 +24,7 @@ export const SLOGAN = ["Sistemas que fazem", "o seu negócio evoluir."];
 export const PRODUCTS = [
   { key: "heeca", name: "", color: COLORS.red },
   { key: "ticket", name: "Ticket", color: "#0a6ee6" },
-  { key: "schedule", name: "Dental", file: "dental", color: "#f06511" },
+  { key: "dental", name: "Dental", file: "dental", color: "#f06511" },
   { key: "budget", name: "Orçamento", file: "orcamento", color: "#0f8a5f" },
   { key: "vendas", name: "Vendas", color: "#6d28d9" },
   { key: "nail", name: "Nail", color: "#c8306f" },

@@ -17,7 +17,7 @@ import type { CSSProperties } from "react";
 export const HEECA_PRODUCTS = {
   heeca: { name: "", color: "#e50914", fullName: "Heeca" },
   ticket: { name: "Ticket", color: "#0a6ee6", fullName: "Heeca Ticket" },
-  schedule: { name: "Dental", color: "#f06511", fullName: "Heeca Dental" },
+  dental: { name: "Dental", color: "#f06511", fullName: "Heeca Dental" },
   budget: { name: "Orçamento", color: "#0f8a5f", fullName: "Heeca Orçamento" },
   vendas: { name: "Vendas", color: "#6d28d9", fullName: "Heeca Vendas" },
   nail: { name: "Nail", color: "#c8306f", fullName: "Heeca Nail" },
