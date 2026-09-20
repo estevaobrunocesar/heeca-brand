@@ -1,8 +1,11 @@
 // Gera uma página HTML de apresentação do kit (animação + sistema) a partir de dist/.
 //   node scripts/proof-page.mjs <saida.html>
+import { mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 import { readFileSync, writeFileSync } from "node:fs";
 
 const out = process.argv[2];
+mkdirSync(dirname(out), { recursive: true });
 const rd = (p) => readFileSync("dist/" + p, "utf8").replace(/^<svg /, '<svg style="width:100%;height:auto;display:block" ');
 const b64 = (p) => readFileSync("dist/" + p).toString("base64");
 const anim = rd("animated/heeca-heeca-intro-on-dark.svg");

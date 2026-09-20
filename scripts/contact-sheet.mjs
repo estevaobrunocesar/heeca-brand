@@ -1,10 +1,13 @@
 // Prancha de contato: todos os ícones de dist/icon agrupados por família.
 //   node scripts/contact-sheet.mjs <saida.png>
+import { mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 import sharp from "sharp";
 import { readFileSync } from "node:fs";
 import { PRODUCTS, FAMILIES } from "../products.mjs";
 
 const out = process.argv[2];
+mkdirSync(dirname(out), { recursive: true });
 const S = 56, GAP = 12, PER = 16, W = 16 + PER * (S + GAP) + 4;
 const fam = {};
 for (const p of PRODUCTS) (fam[p.family] ??= []).push(p);

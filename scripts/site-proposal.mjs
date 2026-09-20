@@ -1,10 +1,13 @@
 // Proposta de home para heeca.com.br com a marca e os ícones de produto do kit.
 //   node scripts/site-proposal.mjs <saida.html>
 // Página estática (mockup navegável). Tudo inline: SVGs de dist/, sem dependências externas além das fontes.
+import { mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 import { readFileSync, writeFileSync } from "node:fs";
 import { PRODUCTS, FAMILIES } from "../products.mjs";
 
 const out = process.argv[2];
+mkdirSync(dirname(out), { recursive: true });
 const svg = (p, style = "") => readFileSync("dist/" + p, "utf8").replace(/^<svg /, `<svg style="${style}" `).replace(/ width="[\d.]+" height="[\d.]+"/, "");
 const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 

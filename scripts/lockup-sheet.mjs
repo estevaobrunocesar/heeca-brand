@@ -1,10 +1,13 @@
 // Prancha das assinaturas horizontais de todos os produtos (fundo escuro), agrupadas por família.
 //   node scripts/lockup-sheet.mjs <saida.png> [on-dark|light]
+import { mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 import sharp from "sharp";
 import { readFileSync, existsSync } from "node:fs";
 import { PRODUCTS, FAMILIES } from "../products.mjs";
 
 const out = process.argv[2];
+mkdirSync(dirname(out), { recursive: true });
 const dark = (process.argv[3] ?? "on-dark") === "on-dark";
 const BG = dark ? "#0a0a0a" : "#ffffff", FG = dark ? "#f2eeee" : "#1a1a1a", MUTED = dark ? "#8a8384" : "#7a7274";
 const COLS = 3, CELL_W = 400, CELL_H = 96, PAD = 24, LOGO_W = 330;
