@@ -38,8 +38,6 @@ export const HEECA_PICTOGRAMS: Partial<Record<string, string>> = {
   "studio": "<path d=\"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z\" />\n  <circle cx=\"12\" cy=\"13\" r=\"3\" />",
   "class": "<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" />\n  <path d=\"M22 10v6\" />\n  <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />",
   "store": "<path d=\"M16 10a4 4 0 0 1-8 0\" />\n  <path d=\"M3.103 6.034h17.794\" />\n  <path d=\"M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z\" />",
-  "nail": "<path d=\"M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" />\n  <path d=\"M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2\" />\n  <path d=\"M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8\" />\n  <path d=\"M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />",
-  "cut": "<circle cx=\"6\" cy=\"6\" r=\"3\" />\n  <path d=\"M8.12 8.12 12 12\" />\n  <path d=\"M20 4 8.12 15.88\" />\n  <circle cx=\"6\" cy=\"18\" r=\"3\" />\n  <path d=\"M14.8 14.8 20 20\" />",
 };
 
 /** Famílias (a cor é da família; os produtos herdam). Fonte: brand/products.mjs. */
@@ -85,8 +83,6 @@ export const HEECA_PRODUCTS = {
   "studio": { name: "Studio", color: "#881337", fullName: "Heeca Studio", colorOnDark: "#f25c85", family: "events", engine: "Studio", sigla: "Su" },
   "class": { name: "Class", color: "#1e3a8a", fullName: "Heeca Class", colorOnDark: "#7c9cf5", family: "education", engine: "Schedule", sigla: "Cl" },
   "store": { name: "Store", color: "#6d28d9", fullName: "Heeca Store", colorOnDark: "#a883f7", family: "commerce", engine: "Commerce", sigla: "St" },
-  "nail": { name: "Nail", color: "#c8306f", fullName: "Heeca Nail", colorOnDark: "#c8306f", family: "beauty", engine: "Schedule", sigla: "Na" },
-  "cut": { name: "Cut", color: "#c8306f", fullName: "Heeca Cut", colorOnDark: "#c8306f", family: "beauty", engine: "Schedule", sigla: "Cu" },
 } as const;
 export type HeecaProduct = keyof typeof HEECA_PRODUCTS;
 export const SLOGAN = "Sistemas que fazem o seu negócio evoluir.";

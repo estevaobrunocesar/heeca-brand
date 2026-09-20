@@ -2,13 +2,13 @@ key,name,family,engine,status,audience,sigla,icon,note
 heeca,,platform,Core,live,Plataforma heeca.com.br,,,
 ticket,Ticket,ops,Ticket,live,Service desk para PMEs,,ticket,
 invoice,Invoice,finance,Invoice,live,Orçamentos e propostas,,receipt,
-beauty,Beauty,beauty,Schedule,soon,Cabeleireiros · barbearias · manicure e pedicure · nail designers · lash · brow · esteticistas · maquiadores · studios de beleza,,sparkles,absorve Cut Barber Nail Lash Brow Skin Make (segmentos)
-wellness,Wellness,beauty,Schedule,soon,Spa · massagem · massoterapia · relaxamento · terapias corporais,,leaf,absorve Spa e Massage
+beauty,Beauty,beauty,Schedule,live,Cabeleireiros · barbearias · manicure e pedicure · nail designers · lash · brow · esteticistas · maquiadores · studios de beleza,,sparkles,absorve Cut Barber Nail Lash Brow Skin Make (segmentos)
+wellness,Wellness,beauty,Schedule,live,Spa · massagem · massoterapia · relaxamento · terapias corporais,,leaf,absorve Spa e Massage
 bronze,Bronze,beauty,Schedule,soon,Bronzeamento artificial e natural,,sun,
 ink,Ink,beauty,Schedule,soon,Tatuadores e studios de tatuagem,Ink,pen-tool, (era Tattoo)
 piercing,Piercing,beauty,Schedule,soon,Studios de piercing,,gem,
 move,Move,health,Schedule,soon,Fisioterapia · quiropraxia · pilates · yoga · terapias do movimento · ergonomia,,activity,absorve Physio Pilates Yoga Ergo
-mind,Mind,health,Health,soon,Psicologia e terapias psicológicas,,brain,absorve Therapy
+mind,Mind,health,Health,live,Psicologia e terapias psicológicas,,brain,absorve Therapy
 nutri,Nutri,health,Health,soon,Nutricionistas,,apple,
 dental,Dental,health,Health,live,Dentistas,,tooth,
 med,Med,health,Health,soon,Médicos e clínicas,,stethoscope,
@@ -22,5 +22,3 @@ event,Event,events,Project,soon,Organizadores · decoradores · cerimonialistas 
 studio,Studio,events,Studio,soon,Fotógrafos · videomakers · estúdios · criadores · produção audiovisual,Su,camera,absorve Photo Video
 class,Class,education,Schedule,soon,Professores · reforço · idiomas · música · dança · arte · cursos · aulas particulares,,graduation-cap,absorve Tutor Music Language Dance Art Training Academy Kids
 store,Store,commerce,Commerce,live,Lojas · boutique · roupas · calçados · presentes · floriculturas · autopeças · papelaria · pequenos comércios,,shopping-bag,
-nail,Nail,beauty,Schedule,live,Nail designers (host nail.heeca.com.br — vira segmento do Beauty),,hand,TRANSIÇÃO: manter até a unificação no Beauty
-cut,Cut,beauty,Schedule,live,Cabeleireiros e barbeiros (host cut.heeca.com.br — vira segmento do Beauty),,scissors,TRANSIÇÃO: manter até a unificação no Beauty
