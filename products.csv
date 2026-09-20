@@ -1,109 +1,26 @@
-key,name,family,status,audience,sigla,note
-heeca,,platform,live,Plataforma heeca.com.br,,
-ticket,Ticket,ops,live,Service desk para PMEs,,
-invoice,Invoice,finance,live,Orçamentos e propostas,,
-dental,Dental,health,live,Dentistas,,
-store,Store,commerce,live,Pequenas lojas,,
-nail,Nail,beauty,live,Nail designers,,
-cut,Cut,beauty,live,Cabeleireiros e barbeiros,,
-beauty,Beauty,beauty,planned,Salões de beleza,,
-lash,Lash,beauty,planned,Lash designers / extensão de cílios,,
-brow,Brow,beauty,planned,Designers de sobrancelhas,,
-skin,Skin,beauty,planned,Esteticistas,,
-ink,Ink,beauty,soon,Tatuadores e studios de tatuagem,,
-piercing,Piercing,beauty,live,Studios de piercing,,
-spa,Spa,beauty,planned,Spas e massagens,,
-makeup,Makeup,beauty,planned,Maquiadores,,
-barber,Barber,beauty,planned,Barbearias,,
-tan,Tan,beauty,planned,Bronzeamento artificial/natural,,
-massage,Massage,beauty,planned,Massoterapeutas,,
-move,Move,health,soon,Fisioterapeutas e quiropraxistas,,
-mind,Mind,health,planned,Psicólogos,,
-nutri,Nutri,health,planned,Nutricionistas,,
-med,Med,health,planned,Consultórios médicos,,
-physio,Physio,health,planned,Clínicas de fisioterapia,,
-pilates,Pilates,health,planned,Studios de Pilates,,
-yoga,Yoga,health,planned,Professores de yoga,,
-therapy,Therapy,health,planned,Terapeutas,,
-speech,Speech,health,planned,Fonoaudiólogos,,
-ergo,Ergo,health,planned,Terapeutas ocupacionais,,
-vet,Vet,health,planned,Veterinários,,
-petcare,PetCare,health,planned,Clínicas e cuidados pet,,
-food,Food,food,planned,Restaurantes pequenos,,
-menu,Menu,food,planned,Cardápio digital,,
-delivery,Delivery,food,planned,Delivery próprio,,
-bakery,Bakery,food,planned,Padarias,,
-cake,Cake,food,planned,Confeiteiros,,
-sweet,Sweet,food,planned,Docerias,,
-pizza,Pizza,food,planned,Pizzarias,,
-burger,Burger,food,planned,Hamburguerias,,
-coffee,Coffee,food,planned,Cafeterias,,
-marmita,Marmita,food,planned,Marmitarias,,
-catering,Catering,food,planned,Buffet e eventos,,
-order,Order,food,planned,Pedidos via WhatsApp,,
-fix,Fix,service,planned,Eletricistas,,
-plumb,Plumb,service,planned,Encanadores,,
-repair,Repair,service,planned,Técnicos de manutenção / assistência técnica,,
-clean,Clean,service,planned,Empresas de limpeza,,
-garden,Garden,service,planned,Jardineiros,,
-pool,Pool,service,planned,Manutenção de piscinas,,
-air,Air,service,planned,Técnicos de ar-condicionado,,
-solar,Solar,service,planned,Instaladores de energia solar,,
-tech,Tech,service,planned,Técnicos de informática,,
-auto,Auto,service,planned,Mecânicos autônomos,,
-detail,Detail,service,planned,Estética automotiva,,
-wash,Wash,service,planned,Lava-rápidos,,
-glass,Glass,service,planned,Vidraçarias,,
-locksmith,Locksmith,service,planned,Chaveiros,,nome com 9 letras — limite do lockup
-cargo,Cargo,service,planned,Pequenos transportadores,,NOME PROVISÓRIO — era "Move" (repetido 3×)
-class,Class,education,planned,Professores particulares,,
-tutor,Tutor,education,planned,Reforço escolar,,
-music,Music,education,planned,Professores de música,,
-language,Language,education,planned,Professores e escolas de idiomas,,
-dance,Dance,education,planned,Escolas de dança,,
-art,Art,education,planned,Professores de arte,,
-coach,Coach,education,planned,Mentores e coaches,,
-training,Training,education,planned,Personal trainers e academias pequenas,,
-academy,Academy,education,planned,Pequenos cursos,,
-kids,Kids,education,planned,Atividades infantis,,
-pet,Pet,pet,planned,Pet shops,,
-groom,Groom,pet,planned,Banho e tosa,,
-dog,Dog,pet,planned,Dog walkers,,
-stay,Stay,pet,planned,Hotéis para pets,,
-care,Care,pet,planned,Pet sitters,,
-k9,K9,pet,planned,Adestradores,,NOME PROVISÓRIO — era "Training" (repetido)
-build,Build,home,planned,Pequenas construtoras,,
-reform,Reform,home,planned,Reformas residenciais,,
-paint,Paint,home,planned,Pintores,,
-wood,Wood,home,planned,Marceneiros,,
-furniture,Furniture,home,planned,Móveis planejados,,nome com 9 letras — limite do lockup
-decor,Decor,home,planned,Decoradores,,
-arch,Arch,home,planned,Arquitetos autônomos,,NOME PROVISÓRIO — era "Architecture" (12 letras)
-interior,Interior,home,planned,Designers de interiores,,
-movers,Movers,home,planned,Mudanças,,NOME PROVISÓRIO — era "Move" (repetido 3×)
-maid,Maid,home,planned,Limpeza residencial,,NOME PROVISÓRIO — era "Clean" (repetido)
-security,Security,home,planned,Instaladores de segurança,,
-sew,Sew,fashion,planned,Costureiras,,
-tailor,Tailor,fashion,planned,Alfaiates,,
-dress,Dress,fashion,planned,Ateliês de vestidos,,
-stitch,Stitch,fashion,planned,Bordadeiras,Si,NOME PROVISÓRIO — era "Embroidery" (10 letras)
-print,Print,fashion,planned,Estamparias,,
-custom,Custom,fashion,planned,Personalizados,,
-atelier,Atelier,fashion,planned,Ateliês de costura,,
-event,Event,events,planned,Organizadores de eventos,,
-photo,Photo,events,planned,Fotógrafos,,
-video,Video,events,planned,Videomakers,,
-party,Party,events,planned,Decoradores de festas,,
-sound,Sound,events,planned,DJs,,
-wedding,Wedding,events,planned,Profissionais de casamento,,
-studio,Studio,events,planned,Studios de fotografia,,
-rental,Rental,events,planned,Locação de equipamentos,,
-fashion,Fashion,commerce,planned,Lojas de roupas e pequenas lojas de moda,,aparecia 2× (Moda e Comércio) — unificado aqui
-shoes,Shoes,commerce,planned,Sapatarias,Sh,
-boutique,Boutique,commerce,planned,Boutiques,,
-gift,Gift,commerce,planned,Lojas de presentes,,
-parts,Parts,commerce,planned,Autopeças,,NOME PROVISÓRIO — era "AutoParts" (9 letras + CamelCase)
-material,Material,commerce,planned,Materiais de construção,,
-office,Office,commerce,planned,Papelarias,,
-market,Market,commerce,planned,Mercadinhos,,
-flor,Flor,commerce,planned,Floriculturas,,
+key,name,family,engine,status,audience,sigla,icon,note
+heeca,,platform,Core,live,Plataforma heeca.com.br,,,
+ticket,Ticket,ops,Ticket,live,Service desk para PMEs,,ticket,
+invoice,Invoice,finance,Invoice,live,Orçamentos e propostas,,receipt,
+beauty,Beauty,beauty,Schedule,soon,Cabeleireiros · barbearias · manicure e pedicure · nail designers · lash · brow · esteticistas · maquiadores · studios de beleza,,sparkles,absorve Cut Barber Nail Lash Brow Skin Make (segmentos)
+wellness,Wellness,beauty,Schedule,soon,Spa · massagem · massoterapia · relaxamento · terapias corporais,,leaf,absorve Spa e Massage
+bronze,Bronze,beauty,Schedule,soon,Bronzeamento artificial e natural,,sun,
+ink,Ink,beauty,Schedule,soon,Tatuadores e studios de tatuagem,Ink,pen-tool, (era Tattoo)
+piercing,Piercing,beauty,Schedule,soon,Studios de piercing,,gem,
+move,Move,health,Schedule,soon,Fisioterapia · quiropraxia · pilates · yoga · terapias do movimento · ergonomia,,activity,absorve Physio Pilates Yoga Ergo
+mind,Mind,health,Health,soon,Psicologia e terapias psicológicas,,brain,absorve Therapy
+nutri,Nutri,health,Health,soon,Nutricionistas,,apple,
+dental,Dental,health,Health,live,Dentistas,,tooth,
+med,Med,health,Health,soon,Médicos e clínicas,,stethoscope,
+fono,Fono,health,Health,soon,Fonoaudiologia,Fn,audio-lines, (era Speech)
+pet,Pet,pet,Schedule,soon,Veterinário · banho e tosa · hotel · day care · adestramento · pet sitter,,paw-print,absorve Groom Dog Stay Vet Care Training
+food,Food,food,Commerce,soon,Restaurante · lanchonete · pizzaria · hamburgueria · confeitaria · marmitaria (templates),Fo,utensils,absorve Menu Delivery Order Bakery Cake Sweet Pizza Burger Coffee Marmita Catering
+service,Service,service,Service,soon,Eletricista · encanador · pintor · limpeza · piscina · ar-condicionado · técnico · jardinagem · manutenção,,wrench,absorve Fix Plumb Repair Clean Garden Pool Air Solar Tech Auto Detail Wash Glass Locksmith
+build,Build,home,Project,soon,Reformas · construção · pintura · marcenaria · móveis planejados · decoração · arquitetura · interiores,,hard-hat,absorve Reform Paint Wood Furniture Decor Architecture Interior
+atelier,Atelier,fashion,Project,soon,Costureiras · alfaiates · ateliês · ajustes · bordados · personalização · confecção · moda sob medida,,shirt,absorve Sew Tailor Dress Embroidery Print Custom Fashion
+event,Event,events,Project,soon,Organizadores · decoradores · cerimonialistas · festas · casamentos · locação · som · estruturas,,party-popper,absorve Party Wedding Sound Rental
+studio,Studio,events,Studio,soon,Fotógrafos · videomakers · estúdios · criadores · produção audiovisual,Su,camera,absorve Photo Video
+class,Class,education,Schedule,soon,Professores · reforço · idiomas · música · dança · arte · cursos · aulas particulares,,graduation-cap,absorve Tutor Music Language Dance Art Training Academy Kids
+store,Store,commerce,Commerce,live,Lojas · boutique · roupas · calçados · presentes · floriculturas · autopeças · papelaria · pequenos comércios,,shopping-bag,
+nail,Nail,beauty,Schedule,live,Nail designers (host nail.heeca.com.br — vira segmento do Beauty),,hand,TRANSIÇÃO: manter até a unificação no Beauty
+cut,Cut,beauty,Schedule,live,Cabeleireiros e barbeiros (host cut.heeca.com.br — vira segmento do Beauty),,scissors,TRANSIÇÃO: manter até a unificação no Beauty

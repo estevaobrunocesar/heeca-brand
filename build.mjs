@@ -15,6 +15,7 @@ import sharp from "sharp";
 import opentype from "opentype.js";
 import { VIEW, COLORS, PATHS, SWOOSH_CENTER, symbolInner } from "./geometry.mjs";
 import { PRODUCTS, FAMILIES, WARNINGS } from "./products.mjs";
+import { pictogram, pictogramGroup } from "./pictograms.mjs";
 if (WARNINGS.length) { console.warn("products.csv:"); WARNINGS.forEach((w) => console.warn("  - " + w)); }
 
 const OUT = "dist";
@@ -119,19 +120,34 @@ function platformIconSvg(accent, { rounded = false, bg = INK } = {}) {
  * Ícone de produto (sistema de 100+): fundo na cor da FAMÍLIA, sigla branca (Montserrat 700) e o
  * símbolo HC pequeno no canto — o produto se distingue pela sigla, a família pela cor, a Heeca pelo HC.
  */
+/** Mistura hex com branco/preto (t de 0 a 1). */
+function mix(hex, target, t) {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const o = target === "white" ? [255, 255, 255] : [0, 0, 0];
+  return "#" + c.map((v, i) => Math.round(v + (o[i] - v) * t).toString(16).padStart(2, "0")).join("");
+}
 function productIconSvg(p, { rounded = false } = {}) {
   const rx = rounded ? ' rx="22.5"' : "";
-  const fs = p.sigla.length > 2 ? 40 : 50;
-  const w = bold.getAdvanceWidth(p.sigla, fs, { letterSpacing: -0.04, kerning: true });
-  const d = bold.getPath(p.sigla, (100 - w) / 2 - 3, 66, fs, { letterSpacing: -0.04, kerning: true }).toPathData(2);
-  const mini = `<g transform="translate(66 75) scale(0.2)" opacity="0.92">${symbolSvg({ h: WHITE, accent: WHITE })}</g>`;
-  return svgDoc(100, 100, `<rect width="100" height="100"${rx} fill="${p.color}"/><path d="${d}" fill="${WHITE}"/>${mini}`);
+  const gid = `g-${p.key}`;
+  // profundidade discreta: tom da família um pouco mais claro no alto, mais fundo embaixo; brilho no topo
+  const defs = `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="${mix(p.color, "white", 0.14)}"/><stop offset="1" stop-color="${mix(p.color, "black", 0.18)}"/></linearGradient><linearGradient id="${gid}-s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.16"/><stop offset="0.5" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>`;
+  const bg = `<rect width="100" height="100"${rx} fill="url(#${gid})"/><rect width="100" height="100"${rx} fill="url(#${gid}-s)"/>`;
+  let mark;
+  if (p.icon) {
+    mark = pictogramGroup(p.icon, { x: 21, y: 17, box: 58, color: WHITE, stroke: 1.9 });
+  } else {
+    const fs = p.sigla.length > 2 ? 40 : 50;
+    const w = bold.getAdvanceWidth(p.sigla, fs, { letterSpacing: -0.04, kerning: true });
+    mark = `<path d="${bold.getPath(p.sigla, (100 - w) / 2 - 3, 66, fs, { letterSpacing: -0.04, kerning: true }).toPathData(2)}" fill="${WHITE}"/>`;
+  }
+  const mini = `<g transform="translate(70 77) scale(0.17)" opacity="0.95">${symbolSvg({ h: WHITE, accent: WHITE })}</g>`;
+  return svgDoc(100, 100, defs + bg + mark + mini);
 }
 const appIconSvg = (p, opts) => (p.name ? productIconSvg(p, opts) : platformIconSvg(p.color, opts));
 
 /** Open Graph 1200 × 630: fundo quase-preto, assinatura horizontal com slogan. */
 function ogSvg(product) {
-  const logo = horizontalFile(product, { h: SILVER, accent: product.color }, { slogan: true });
+  const logo = horizontalFile(pd(product), { h: SILVER, accent: product.colorOnDark }, { slogan: true });
   const [, w, h] = logo.match(/width="([\d.]+)" height="([\d.]+)"/).map(Number);
   const targetW = 720, scale = targetW / w;
   const inner = logo.replace(/^<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
@@ -196,8 +212,9 @@ function animatedSvg(product, o) {
 // ---------------------------------------------------------------------------
 function logoTsx() {
   const s = PATHS.stem, rs = PATHS.stemR;
-  const products = PRODUCTS.map((p) => `  ${JSON.stringify(p.key)}: { name: ${JSON.stringify(p.name)}, color: ${JSON.stringify(p.color)}, fullName: ${JSON.stringify(p.name ? `Heeca ${p.name}` : "Heeca")}, family: ${JSON.stringify(p.family)}, sigla: ${JSON.stringify(p.sigla)} },`).join("\n");
-  const families = Object.entries(FAMILIES).map(([k, f]) => `  ${k}: { label: ${JSON.stringify(f.label)}, color: ${JSON.stringify(f.color)}, engine: ${JSON.stringify(f.engine)} },`).join("\n");
+  const products = PRODUCTS.map((p) => `  ${JSON.stringify(p.key)}: { name: ${JSON.stringify(p.name)}, color: ${JSON.stringify(p.color)}, fullName: ${JSON.stringify(p.name ? `Heeca ${p.name}` : "Heeca")}, colorOnDark: ${JSON.stringify(p.colorOnDark)}, family: ${JSON.stringify(p.family)}, engine: ${JSON.stringify(p.engine)}, sigla: ${JSON.stringify(p.sigla)} },`).join("\n");
+  const pictos = PRODUCTS.filter((p) => p.icon).map((p) => `  ${JSON.stringify(p.key)}: ${JSON.stringify(pictogram(p.icon))},`).join("\n");
+  const families = Object.entries(FAMILIES).map(([k, f]) => `  ${k}: { label: ${JSON.stringify(f.label)}, color: ${JSON.stringify(f.color)}, onDark: ${JSON.stringify(f.onDark)} },`).join("\n");
   return `/**
  * Marca Heeca — componente compartilhado entre o portal e os produtos.
  * GERADO por brand/build.mjs a partir de brand/geometry.mjs — não edite; rode \`pnpm build\` em brand/.
@@ -213,6 +230,11 @@ function logoTsx() {
  *   <LogoIntro product="ticket" />               animação de abertura (H → C → conexão → nome)
  */
 import type { CSSProperties } from "react";
+
+/** Pictogramas (miolo SVG 24 × 24, traço herdado). Fonte: Lucide (ISC) + desenhos próprios em brand/pictograms.mjs. */
+export const HEECA_PICTOGRAMS: Partial<Record<string, string>> = {
+${pictos}
+};
 
 /** Famílias (a cor é da família; os produtos herdam). Fonte: brand/products.mjs. */
 export const HEECA_FAMILIES = {
@@ -271,20 +293,21 @@ const BRAND_FONT = "var(--font-brand)";
 export function Logo({ product = "heeca", variant = "horizontal", onDark = false, slogan = false, size = 32, className, style }: LogoProps) {
   const p = HEECA_PRODUCTS[product];
   const h = onDark ? SILVER : "currentColor";
+  const accent = onDark ? p.colorOnDark : p.color;
   const fontSize = (size * 0.62) / 0.7; // maiúsculas = 62 % da altura do símbolo
   const wordmark: CSSProperties = { fontFamily: BRAND_FONT, fontWeight: 700, fontSize, letterSpacing: "-0.03em", lineHeight: 1, color: h, whiteSpace: "nowrap" };
   const sloganStyle: CSSProperties = { fontFamily: BRAND_FONT, fontWeight: 300, fontSize: fontSize * 0.29, letterSpacing: "0.06em", lineHeight: 1.3, color: h, opacity: 0.9 };
   const name = (
     <>
-      Hee<span style={{ color: p.color }}>ca</span>
-      {p.name ? <> <span style={{ fontWeight: 500, color: p.color }}>{p.name}</span></> : null}
+      Hee<span style={{ color: accent }}>ca</span>
+      {p.name ? <> <span style={{ fontWeight: 500, color: accent }}>{p.name}</span></> : null}
     </>
   );
-  if (variant === "symbol") return <HeecaSymbol h={h} accent={p.color} size={size} title={p.fullName} className={className} style={style} />;
+  if (variant === "symbol") return <HeecaSymbol h={h} accent={accent} size={size} title={p.fullName} className={className} style={style} />;
   if (variant === "vertical") {
     return (
       <span className={className} style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: size * 0.08, textAlign: "center", ...style }} aria-label={p.fullName} role="img">
-        <HeecaSymbol h={h} accent={p.color} size={size} />
+        <HeecaSymbol h={h} accent={accent} size={size} />
         <span style={{ ...wordmark, fontSize: fontSize * 0.9 }}>{name}</span>
         {slogan ? <span style={{ ...sloganStyle, fontSize: fontSize * 0.26, maxWidth: size * 2.4 }}>{SLOGAN}</span> : null}
       </span>
@@ -292,7 +315,7 @@ export function Logo({ product = "heeca", variant = "horizontal", onDark = false
   }
   return (
     <span className={className} style={{ display: "inline-flex", alignItems: "center", gap: size * 0.1, ...style }} aria-label={p.fullName} role="img">
-      <HeecaSymbol h={h} accent={p.color} size={size} />
+      <HeecaSymbol h={h} accent={accent} size={size} />
       <span style={{ display: "grid", gap: fontSize * 0.12 }}>
         <span style={wordmark}>{name}</span>
         {slogan ? <span style={sloganStyle}>{SLOGAN}</span> : null}
@@ -324,11 +347,23 @@ export function HeecaAppIcon({ product, size = 48, radius = 22.5, className, sty
     );
   }
   const fs = p.sigla.length > 2 ? 40 : 50;
+  const picto = HEECA_PICTOGRAMS[product];
+  const gid = \`hg-\${product}\`;
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} className={className} style={style} role="img" aria-label={p.fullName}>
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stopColor={p.color} stopOpacity={0.86} /><stop offset="1" stopColor={p.color} /></linearGradient>
+        <linearGradient id={\`\${gid}-s\`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff" stopOpacity={0.16} /><stop offset="0.5" stopColor="#fff" stopOpacity={0} /></linearGradient>
+      </defs>
       <rect width="100" height="100" rx={radius} fill={p.color} />
-      <text x="47" y="66" textAnchor="middle" fontFamily={BRAND_FONT} fontWeight={700} fontSize={fs} letterSpacing="-0.04em" fill="#fff">{p.sigla}</text>
-      <g transform="translate(66 75) scale(0.2)" opacity={0.92}>
+      <rect width="100" height="100" rx={radius} fill={\`url(#\${gid})\`} />
+      <rect width="100" height="100" rx={radius} fill={\`url(#\${gid}-s)\`} />
+      {picto ? (
+        <g transform="translate(21 17) scale(2.4167)" fill="none" stroke="#fff" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: picto }} />
+      ) : (
+        <text x="47" y="66" textAnchor="middle" fontFamily={BRAND_FONT} fontWeight={700} fontSize={fs} letterSpacing="-0.04em" fill="#fff">{p.sigla}</text>
+      )}
+      <g transform="translate(70 77) scale(0.17)" opacity={0.95}>
         <path d={D.cBase} fill="none" stroke="#fff" strokeWidth={SW} strokeLinecap="round" />
         <rect x={10} y={6} width={17} height={88} rx={1.5} fill="#fff" />
         <rect x={62} y={6} width={17} height={88} rx={1.5} fill="#fff" />
@@ -346,8 +381,9 @@ export function HeecaAppIcon({ product, size = 48, radius = 22.5, className, sty
 export function LogoIntro({ product = "heeca", onDark = true, size = 96, slogan = true, className, style }: Omit<LogoProps, "variant">) {
   const p = HEECA_PRODUCTS[product];
   const h = onDark ? SILVER : "currentColor";
+  const accent = onDark ? p.colorOnDark : p.color;
   const fontSize = (size * 0.62) / 0.7;
-  const letters: [string, string][] = [["H", h], ["e", h], ["e", h], ["c", p.color], ["a", p.color]];
+  const letters: [string, string][] = [["H", h], ["e", h], ["e", h], ["c", accent], ["a", accent]];
   const css = \`
     .hi-stem,.hi-rstem{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0)}
     .hi-c,.hi-arm{stroke-dasharray:200;stroke-dashoffset:200}
@@ -369,16 +405,16 @@ export function LogoIntro({ product = "heeca", onDark = true, size = 96, slogan 
       <style>{css}</style>
       <svg viewBox={\`0 0 \${VIEW.w} \${VIEW.h}\`} height={size} width={(size * VIEW.w) / VIEW.h} aria-hidden="true">
         <defs><mask id="hi-sw"><path className="hi-mask" d={D.swooshCenter} fill="none" stroke="#fff" strokeWidth={24} strokeLinecap="round" /></mask></defs>
-        <path className="hi-c" d={D.cBase} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+        <path className="hi-c" d={D.cBase} fill="none" stroke={accent} strokeWidth={SW} strokeLinecap="round" />
         <rect className="hi-stem" x={${s.x}} y={${s.y}} width={${s.w}} height={${s.h}} rx={${s.rx}} fill={h} />
         <rect className="hi-rstem" x={${rs.x}} y={${rs.y}} width={${rs.w}} height={${rs.h}} rx={${rs.rx}} fill={h} />
-        <g mask="url(#hi-sw)"><path d={D.swoosh} fill={p.color} /></g>
-        <path className="hi-arm" d={D.topArm} fill="none" stroke={p.color} strokeWidth={SW} strokeLinecap="round" />
+        <g mask="url(#hi-sw)"><path d={D.swoosh} fill={accent} /></g>
+        <path className="hi-arm" d={D.topArm} fill="none" stroke={accent} strokeWidth={SW} strokeLinecap="round" />
       </svg>
       <span style={{ display: "grid", gap: fontSize * 0.12 }}>
         <span style={{ fontFamily: BRAND_FONT, fontWeight: 700, fontSize, letterSpacing: "-0.03em", lineHeight: 1, whiteSpace: "nowrap" }}>
           {letters.map(([ch, color], i) => <span key={i} className="hi-l" style={{ display: "inline-block", color, animationDelay: \`\${2.7 + i * 0.1}s\` }}>{ch}</span>)}
-          {p.name ? <span className="hi-l" style={{ display: "inline-block", fontWeight: 500, color: p.color, animationDelay: "3.2s" }}>&nbsp;{p.name}</span> : null}
+          {p.name ? <span className="hi-l" style={{ display: "inline-block", fontWeight: 500, color: accent, animationDelay: "3.2s" }}>&nbsp;{p.name}</span> : null}
         </span>
         {slogan ? <span className="hi-slogan" style={{ fontFamily: BRAND_FONT, fontWeight: 300, fontSize: fontSize * 0.29, letterSpacing: "0.06em", lineHeight: 1.3, color: h }}>{SLOGAN}</span> : null}
       </span>
@@ -406,7 +442,8 @@ function ico(pngs) {
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 
-const onDark = (p) => ({ h: SILVER, accent: p.color });
+const onDark = (p) => ({ h: SILVER, accent: p.colorOnDark });
+const pd = (p) => ({ ...p, color: p.colorOnDark }); // produto "visto" em fundo escuro
 const onLight = (p) => ({ h: GRAPHITE, accent: p.color });
 const monoBlack = { h: INK, accent: INK, knock: WHITE };
 const monoWhite = { h: WHITE, accent: WHITE, knock: INK };
@@ -422,13 +459,13 @@ for (const p of PRODUCTS) {
   if (p.status === "planned") continue; // planejados: só o ícone (para o mapa do ecossistema)
   write(`symbol/heeca-symbol-${k}-on-dark.svg`, symbolFile(onDark(p)));
   write(`symbol/heeca-symbol-${k}.svg`, symbolFile(onLight(p)));
-  write(`logo/heeca-${k}-principal-on-dark.svg`, verticalFile(p, onDark(p)));
+  write(`logo/heeca-${k}-principal-on-dark.svg`, verticalFile(pd(p), onDark(p)));
   write(`logo/heeca-${k}-principal.svg`, verticalFile(p, onLight(p)));
-  write(`logo/heeca-${k}-vertical-on-dark.svg`, verticalFile(p, onDark(p), { slogan: false }));
+  write(`logo/heeca-${k}-vertical-on-dark.svg`, verticalFile(pd(p), onDark(p), { slogan: false }));
   write(`logo/heeca-${k}-vertical.svg`, verticalFile(p, onLight(p), { slogan: false }));
-  write(`logo/heeca-${k}-horizontal-on-dark.svg`, horizontalFile(p, onDark(p)));
+  write(`logo/heeca-${k}-horizontal-on-dark.svg`, horizontalFile(pd(p), onDark(p)));
   write(`logo/heeca-${k}-horizontal.svg`, horizontalFile(p, onLight(p)));
-  write(`logo/heeca-${k}-horizontal-slogan-on-dark.svg`, horizontalFile(p, onDark(p), { slogan: true }));
+  write(`logo/heeca-${k}-horizontal-slogan-on-dark.svg`, horizontalFile(pd(p), onDark(p), { slogan: true }));
   write(`logo/heeca-${k}-horizontal-slogan.svg`, horizontalFile(p, onLight(p), { slogan: true }));
   write(`logo/heeca-${k}-horizontal-black.svg`, horizontalFile({ ...p, color: INK }, monoBlack));
   write(`logo/heeca-${k}-horizontal-white.svg`, horizontalFile({ ...p, color: WHITE }, monoWhite));
@@ -439,7 +476,7 @@ for (const p of PRODUCTS) {
   write(`favicon/heeca-${k}.ico`, ico(favs));
   write(`favicon/heeca-${k}.svg`, appIconSvg(p, { rounded: true }));
   write(`social/heeca-${k}-og.png`, await sharp(Buffer.from(ogSvg(p)), { density: 96 }).png({ compressionLevel: 9 }).toBuffer());
-  write(`animated/heeca-${k}-intro-on-dark.svg`, animatedSvg(p, onDark(p)));
+  write(`animated/heeca-${k}-intro-on-dark.svg`, animatedSvg(pd(p), onDark(p)));
   write(`animated/heeca-${k}-intro.svg`, animatedSvg(p, onLight(p)));
 }
 

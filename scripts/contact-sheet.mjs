@@ -14,7 +14,7 @@ const comps = [], texts = [];
 const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 for (const [k, list] of Object.entries(fam)) {
   const f = FAMILIES[k];
-  texts.push(`<text x="16" y="${y + 14}" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#222">${esc(`${f.label} · ${f.color} · motor ${f.engine} · ${list.length}`)}</text>`);
+  texts.push(`<text x="16" y="${y + 14}" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#222">${esc(`${f.label} · ${f.color} · ${list.length}`)}</text>`);
   y += 24;
   let x = 16, col = 0;
   for (const p of list) {
