@@ -10,7 +10,7 @@ const out = process.argv[2];
 mkdirSync(dirname(out), { recursive: true });
 const dark = (process.argv[3] ?? "on-dark") === "on-dark";
 const BG = dark ? "#0a0a0a" : "#ffffff", FG = dark ? "#f2eeee" : "#1a1a1a", MUTED = dark ? "#8a8384" : "#7a7274";
-const COLS = 3, CELL_W = 400, CELL_H = 96, PAD = 24, LOGO_W = 330;
+const COLS = 3, CELL_W = 400, CELL_H = 118, PAD = 24, LOGO_W = 330;
 const fam = {};
 for (const p of PRODUCTS) if (p.status !== "planned") (fam[p.family] ??= []).push(p);
 

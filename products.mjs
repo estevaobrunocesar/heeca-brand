@@ -23,7 +23,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 export const FAMILIES = {
   // color = tom base (fundo do ícone, texto sobre fundo claro) · onDark = tom para texto/símbolo sobre
   // fundo escuro (só difere quando o base tem contraste < 3,5:1 sobre #0a0a0a)
-  platform: { label: "Plataforma", color: "#e50914", onDark: "#e50914" },
+  platform: { label: "Plataforma", color: "#E31B23", onDark: "#E31B23" },
   ops: { label: "Atendimento e operações", color: "#0a6ee6", onDark: "#0a6ee6" },
   finance: { label: "Financeiro", color: "#0f8a5f", onDark: "#0f8a5f" },
   beauty: { label: "Beleza e estética", color: "#c8306f", onDark: "#c8306f" },

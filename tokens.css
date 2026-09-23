@@ -1,27 +1,40 @@
-/* Paleta de marca Heeca — fonte da verdade das cores compartilhadas.
-   Os produtos trocam SÓ o acento; tinta, papel e neutros são comuns.
-   Contraste sobre branco: heeca 4,5:1 · ticket 4,6:1 · budget 4,6:1 · schedule 3,2:1
-   (o laranja não serve para texto corrido pequeno — use --heeca-schedule-dark nesse caso). */
+/* Tokens de marca Heeca — fonte da verdade das cores compartilhadas.
+   Valores do handoff HEECA_BRAND_KIT_DEV_v1.0 (tokens/heeca.tokens.json).
+   O vermelho é ACENTO/CTA, não deve dominar a interface. Contraste sobre branco:
+   black 16,2:1 · primary 4,9:1 · primary-hover 7,0:1 · graphite 11,6:1 · text-secondary 4,7:1. */
 :root {
-  --heeca-ink: #0a0a0a;
-  --heeca-paper: #ffffff;
+  --heeca-primary: #e31b23;          /* acento / CTA / arco do logotipo */
+  --heeca-primary-hover: #b90f19;    /* hover / pressed */
+  --heeca-primary-soft: #fdeaea;     /* fundo suave derivado (chips, alerts) */
+  --heeca-black: #15171a;            /* texto / símbolo / base do dark mode */
+  --heeca-graphite: #30343a;         /* superfícies */
+  --heeca-text-secondary: #667085;   /* texto auxiliar */
+  --heeca-border: #e5e7eb;
+  --heeca-surface: #ffffff;
+  --heeca-surface-warm: #f7f4ef;     /* institucional / áreas suaves */
 
-  --heeca-brand: #e50914;
-  --heeca-brand-dark: #b20b12;
-  --heeca-brand-soft: #fdecec;
+  /* compatibilidade com os produtos já no ar */
+  --heeca-ink: var(--heeca-black);
+  --heeca-paper: var(--heeca-surface);
+  --heeca-brand: var(--heeca-primary);
+  --heeca-brand-dark: var(--heeca-primary-hover);
+  --heeca-brand-soft: var(--heeca-primary-soft);
 
-  --heeca-ticket: #0a6ee6;
-  --heeca-ticket-dark: #0857b8;
-  --heeca-ticket-soft: #e8f1fd;
+  /* forma e ritmo */
+  --heeca-radius-sm: 6px;
+  --heeca-radius-md: 10px;
+  --heeca-radius-lg: 16px;
+  --heeca-radius-xl: 24px;
+  --heeca-space-1: 4px;
+  --heeca-space-2: 8px;
+  --heeca-space-3: 12px;
+  --heeca-space-4: 16px;
+  --heeca-space-5: 24px;
+  --heeca-space-6: 32px;
+  --heeca-space-7: 40px;
+  --heeca-space-8: 48px;
+  --heeca-space-9: 64px;
 
-  --heeca-schedule: #f06511;
-  --heeca-schedule-dark: #c4500c;
-  --heeca-schedule-soft: #fdeee4;
-
-  --heeca-budget: #0f8a5f;
-  --heeca-budget-dark: #0b6b4a;
-  --heeca-budget-soft: #e4f4ed;
-  --heeca-vendas: #6d28d9;
-  --heeca-vendas-dark: #5b21b6;
-  --heeca-vendas-soft: #efe9fb;
+  /* tipografia: Inter na interface (400/500/600/700/800). O logotipo é desenho, não fonte. */
+  --font-ui: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }

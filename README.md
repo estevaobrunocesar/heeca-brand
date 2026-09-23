@@ -4,27 +4,32 @@ Identidade da plataforma Heeca (heeca.com.br) e do ecossistema: 20 produtos vert
 Bronze, Ink, Piercing, Move, Mind, Nutri, Dental, Med, Fono, Pet, Food, Service, Build, Atelier, Event, Studio,
 Class, Store) + Ticket e Invoice. Motores (Core, Schedule, Health, Commerce, Service, Project, Studio) são
 arquitetura e não têm logo.
-Conceito escolhido pela família em setembro de 2026, ajustado para ler "HC" e não "IC": **as duas
-hastes do H em prata; o swoosh vermelho é a barra do H e vira o braço superior do C; o C vermelho
-nasce atrás da haste direita.** Prata = H (Heloísa); vermelho = o gesto que forma o C (Catharina).
-O nome é **He·e·ca**: Heloísa e Catharina.
 
-- Apresentação do kit com a animação: https://claude.ai/artifact/JaZ9fHz7NXCSDQgCtuYYW7
-- Briefing para a equipe de design (render 3D, refino, motion): [BRIEF-DESIGN.md](BRIEF-DESIGN.md)
+**Direção aprovada: Tipografia Exclusiva** (handoff `reference/HEECA_BRAND_KIT_DEV_v1.0/`, set/2026).
+"Um logotipo minimalista e sofisticado, onde a tipografia ganha protagonismo. Linhas precisas, formas únicas
+e um detalhe na letra H que representa conexão." O **arco vermelho é a barra do H** — conexão, movimento e
+evolução — e as **barras superiores dos E** são vermelhas e destacadas. HE = Heloísa · CA = Catharina.
+O logotipo é **desenho, não fonte**: nunca substitua por texto digitado.
+
+Os SVGs que vieram no zip do handoff são um rascunho (arco em S, letras fora de proporção); a geometria
+deste kit foi **medida pixel a pixel no painel aprovado** (`reference/conceito_tipografia_exclusiva.png`) —
+proporções, pesos e espaçamento vêm de lá.
+
+- Briefing para a equipe de design (refino das curvas, render 3D, motion): [BRIEF-DESIGN.md](BRIEF-DESIGN.md)
 
 ## Fonte da verdade
 
 | Arquivo | Papel |
 |---|---|
-| `products.csv` | **Catálogo de produtos**: chave, nome, família, motor, status, público, sigla (opcional) |
+| `products.csv` | **Catálogo de produtos**: chave, nome, família, motor, status, público, sigla (opcional), pictograma |
 | `products.mjs` | Lê o CSV, dá a cor pela família (dois tons), gera a sigla única, valida; `node products.mjs` imprime |
-| `geometry.mjs` | **Geometria do símbolo** (haste, C, swoosh) — mude aqui, nunca nos arquivos gerados |
-| `build.mjs` | Paleta, produtos, wordmark, slogan e todas as composições; gera `dist/` e `logo.tsx` |
-| `logo.tsx` | **Gerado.** Componente React (`Logo`, `HeecaSymbol`, `LogoIntro`) — copiado para cada projeto |
-| `tokens.css` | Cores como custom properties |
-| `fonts/` | Montserrat 300/500/700 (OFL), só para converter texto em curvas no build |
-| `scripts/proof-page.mjs` | Gera a página de apresentação a partir de `dist/` |
-| `scripts/lockup-sheet.mjs`, `scripts/contact-sheet.mjs` | Pranchas de todas as assinaturas / todos os ícones |
+| `geometry.mjs` | **Geometria do logotipo e do símbolo** + paleta — mude aqui, nunca nos arquivos gerados |
+| `pictograms.mjs` | Pictogramas dos ícones de produto (Lucide + desenhos próprios) |
+| `build.mjs` | Composições, ícones, animação; gera `dist/` e `logo.tsx` |
+| `logo.tsx` | **Gerado.** Componente React (`Logo`, `HeecaWordmark`, `HeecaSymbol`, `HeecaAppIcon`, `LogoIntro`) — copiado para cada projeto |
+| `tokens.css` | Tokens do handoff como custom properties |
+| `fonts/` | Inter 400/600 (OFL) — só para converter nome do produto e slogan em curvas. O logotipo não usa fonte |
+| `reference/` | Painel aprovado, kit original do handoff e os painéis anteriores (histórico) |
 
 ```bash
 pnpm install
@@ -32,32 +37,33 @@ pnpm build          # regenera dist/ e logo.tsx
 ```
 
 Produto novo = **uma linha em `products.csv`** (`key` = slug de código/URL/arquivos, `name` = nome comercial de
-uma palavra ≤ 9 letras, `family`, `engine`, `status`) + `pnpm build` + copiar `logo.tsx` para os projetos.
-Segmentos (nail, lash, pizzaria…) **não** são linhas: são configuração dentro do produto.
+uma palavra ≤ 9 letras, `family`, `engine`, `status`, `icon` opcional) + `pnpm build` + copiar `logo.tsx`
+para os projetos. Segmentos (nail, lash, pizzaria…) **não** são linhas: são configuração dentro do produto.
 
 ## O sistema para muitos produtos
 
-- **Marca-mãe monolítica**: todo produto é símbolo HC + "Heeca" + nome. Nenhum produto tem símbolo próprio.
+- **Heeca como marca-mãe**: o logotipo e o símbolo são sempre os mesmos, nas cores institucionais.
+  Nenhum produto tem logotipo próprio nem muda a cor do arco.
+- **O produto entra como segunda linha**, em caixa alta (Inter 600, tracking 0,18 em), na cor da sua família.
 - **Cor é da família (mercado), não do produto** — 13 famílias, ΔE ≥ 22 entre quaisquer duas. Cada família tem
-  dois tons: `color` (fundo do ícone, texto sobre claro) e `onDark` (texto/símbolo sobre fundo escuro; só difere
-  quando o base tem contraste < 3,5:1 sobre `#0a0a0a`).
+  dois tons: `color` (fundo do ícone, texto sobre claro) e `onDark` (texto sobre fundo escuro).
 - **Sigla de 2 letras, única na plataforma**, gerada (1ª+2ª letra → 1ª+consoante → 3 letras) ou fixada no CSV.
-- **Ícone de app do produto** = fundo na cor da família + sigla branca + HC pequeno no canto. O ícone da
-  plataforma é escuro com o HC grande. É o que distingue 20 ícones Heeca lado a lado num celular.
+- **Ícone de app do produto** = fundo na cor da família + pictograma branco + o H pequeno no canto. O ícone da
+  plataforma é Heeca Black com o H e o arco. É o que distingue 20 ícones Heeca lado a lado num celular.
 - `status`: `live`/`soon` geram o kit completo; `planned` gera só o ícone (para o mapa do ecossistema).
 
 ## O que tem em `dist/`
 
 ```
-symbol/    heeca-symbol-{produto}-on-dark.svg   prata + cor (fundo escuro — a versão de referência)
-           heeca-symbol-{produto}.svg           grafite + cor (fundo claro)
-           heeca-symbol-black.svg / -white.svg  uma cor só, com linha de respiro entre as partes
-logo/      heeca-{produto}-principal(-on-dark).svg          vertical com slogan ("logo principal")
-           heeca-{produto}-vertical(-on-dark).svg           vertical sem slogan
+symbol/    heeca-symbol.svg / -on-dark.svg      H + arco (fundo claro / escuro)
+           heeca-symbol-black.svg / -white.svg  uma cor só
+           heeca-symbol-{produto}(-on-dark).svg idênticos (compatibilidade com os scripts dos projetos)
+logo/      heeca-{produto}-principal(-on-dark).svg          centralizado, com slogan ("logo principal")
+           heeca-{produto}-vertical(-on-dark).svg           centralizado, sem slogan
            heeca-{produto}-horizontal(-on-dark).svg         cabeçalhos, e-mails
            heeca-{produto}-horizontal-slogan(-on-dark).svg  materiais
            heeca-{produto}-horizontal-black.svg / -white.svg
-icon/      heeca-{produto}-app-icon.svg + -{512,192,180}.png   produto: cor da família + sigla + HC; plataforma: escuro + HC
+icon/      heeca-{produto}-app-icon.svg + -{512,192,180}.png
 favicon/   heeca-{produto}.ico (16/32/48) · .svg · -{16,32,48}.png
 social/    heeca-{produto}-og.png               1200 × 630
 animated/  heeca-{produto}-intro(-on-dark).svg  SVG animado autônomo (CSS interno; roda em <img>)
@@ -65,51 +71,57 @@ animated/  heeca-{produto}-intro(-on-dark).svg  SVG animado autônomo (CSS inter
 
 ## Regras
 
-- **Cores.** Prata `#d4d6db` só em fundo escuro; em fundo claro as partes do H viram grafite `#1f1f23`.
-  Vermelho `#e50914`. Preto `#0a0a0a`. Branco `#ffffff`. (O `#DC2626` do painel original é
-  visualmente equivalente; mantivemos o vermelho já aplicado nos sistemas.)
-- **Produtos.** Só a cor (da família) muda: swoosh, C, "ca" e o nome do produto. As hastes continuam
-  prata/grafite. Em fundo escuro use o tom `onDark` da família (os SVGs `-on-dark` já vêm assim).
-- **Wordmark.** "Heeca" em Montserrat 700, tracking −3 %: "Hee" na cor do H, "ca" na cor do produto;
-  nome do produto em Montserrat 500 na cor do produto. A grafia é sempre **Heeca** (nunca HeeCa).
-- **Slogan.** "Sistemas que fazem o seu negócio evoluir." — Montserrat 300, tracking +6 %, duas linhas.
-  Só na versão principal e na horizontal com slogan. Nunca em cabeçalhos, sidebar, ícones ou favicons.
-- **Monocromática.** Em uma cor só, uma linha de respiro (5 u, na cor do fundo) separa swoosh, hastes
-  e C — sem ela o símbolo vira mancha. Já está nos arquivos `-black` / `-white`.
-- **Tamanho mínimo.** Símbolo 24 px; ícone de app 48 px; assinatura horizontal 120 px de largura.
-  Em 16 px o símbolo é uma mancha reconhecível pela cor — por isso o favicon usa fundo escuro.
-- **Área de respiro.** 12 u (≈ 10 % da altura do símbolo) em todos os lados; os SVGs já vêm com ela.
-- **Não.** Redesenhar o swoosh, engrossar/afinar o traço, inclinar, gradiente ou brilho em UI
-  (o cromado é só para o render 3D de materiais — ver BRIEF), colocar o slogan em tamanhos pequenos,
-  usar ® (marca não registrada).
+- **Cores.** Primary `#E31B23` (arco, barras dos E, CTA), Primary Hover `#B90F19`, Black `#15171A`
+  (letras, símbolo), Graphite `#30343A` (superfícies), Text Secondary `#667085`, Border `#E5E7EB`,
+  Warm `#F7F4EF`, branco. Em fundo escuro as letras ficam brancas; **o arco não muda de cor**.
+- **Não redesenhar, distorcer, inclinar, aplicar filtros ou alterar as cores do logotipo** (regra do handoff).
+- **Logotipo.** `HEECA` é curva, nunca texto: não substitua por fonte, não condense, não mude o tracking.
+  Em texto corrido a grafia é **Heeca**.
+- **Produtos.** Só a segunda linha muda (nome em caixa alta, cor da família). Em fundo escuro use o tom
+  `onDark` (os SVGs `-on-dark` já vêm assim).
+- **Slogan.** "Sistemas que fazem o seu negócio evoluir." — Inter 400, na largura exata do logotipo
+  (alinhado pela haste do H). Só na versão principal e na horizontal com slogan. Nunca em cabeçalhos,
+  sidebar, ícones ou favicons.
+- **Monocromática.** Tudo em uma cor (`-black` / `-white`): o arco se funde às hastes e continua legível
+  pelas pontas que ultrapassam o H.
+- **Tamanho mínimo.** Logotipo 90 px de largura (maiúsculas ≈ 16 px); símbolo 20 px; ícone de app 48 px.
+- **Área de proteção.** A altura do H em todos os lados (os SVGs já trazem 20 u ≈ 1/5 da altura; em
+  aplicações, reserve os 100 u completos).
+- **Interface.** Inter 400/500/600/700/800. Base clara, bastante respiro, cards com bordas suaves e sombras
+  discretas; dark mode com Heeca Black. Vermelho é acento — não deve dominar a tela. Não usar só cor para
+  comunicar estado. Sem ® (marca não registrada).
 
 ## No código
 
-`logo.tsx` é gerado pelo build e copiado para `src/components/brand/logo.tsx` de cada projeto
-(os produtos acrescentam a constante `BRAND` no fim). Exporta `HEECA_FAMILIES`, `HEECA_PRODUCTS` (com
-`family`, `engine`, `sigla`, `colorOnDark`), `Logo`, `HeecaSymbol`, `HeecaAppIcon` e `LogoIntro`. O app define `--font-brand` com a
-Montserrat via next/font, pesos **300/500/700**. Partes do H em `currentColor` (seguem o tema);
-`onDark` força a prata.
+`logo.tsx` é gerado pelo build e copiado para `src/components/brand/logo.tsx` de cada projeto.
+Exporta `HEECA_FAMILIES`, `HEECA_PRODUCTS`, `HEECA_COLORS`, `Logo`, `HeecaWordmark`, `HeecaSymbol`,
+`HeecaAppIcon` e `LogoIntro`. O logotipo é SVG puro (não depende de fonte); o nome do produto e o slogan
+usam `var(--font-ui, var(--font-brand, Inter))` — o app define `--font-ui` com a Inter via next/font.
+Letras em `currentColor` (seguem o tema); `onDark` força branco.
 
 ```tsx
-<Logo product="ticket" size={26} />                      // sidebar, cabeçalho
+<Logo product="ticket" size={20} />                      // sidebar, cabeçalho (size = altura das maiúsculas)
 <Logo product="ticket" variant="vertical" slogan />      // materiais, telas grandes
 <Logo product="ticket" variant="symbol" size={28} />     // avatar
-<LogoIntro product="ticket" onDark size={44} />          // abertura animada (login, splash)
+<LogoIntro product="ticket" onDark size={40} />          // abertura animada (o arco varre e conecta)
 <HeecaAppIcon product="beauty" size={48} />              // ícone do produto (mapa, seletor, avatar)
 ```
 
-`LogoIntro` executa a sequência do painel — 1. H surge (duas hastes) · 2. C se forma (nasce da haste direita) · 3. conexão (swoosh = barra) · 4. nome revela —
-em ≈ 4 s e respeita `prefers-reduced-motion`.
+`LogoIntro`: hastes sobem · o arco varre da esquerda para a direita · E, E, C, A entram · nome · slogan
+(≈ 2,5 s) e respeita `prefers-reduced-motion`.
 
-## Construção (malha 126 × 100 u)
+## Construção (maiúsculas = 100 u)
 
-- Hastes: x 10 → 27 e x 62 → 79 (17 u), y 6 → 94, cantos 1,5 u.
-- C: centro (94, 52), raio central 30 u, traço 17 u, terminais redondos. Arco de −70° a 48° pela
-  esquerda (o dorso fica atrás da haste direita); braço superior de −70° a −48° continua o swoosh.
-- Swoosh: cúbica de (14, 66) — dentro da haste esquerda — → (40, 60) → tangente → ponto −70° do C;
-  largura 7 → 17 u. É a barra do H.
-- Wordmark: maiúsculas = 62 u (haste tem 88 u); baseline na base da haste (y 94).
+- **H** (115 u): hastes de 28 u em x 17 e 104 — **sem barra preta**; a barra é o arco.
+- **Arco** (148 × 38,3 u): pontas em (0; 81,5) e (148; 81,5); borda externa R 90,6 (ápice y 43,2),
+  interna R 148,2 (ápice y 61,7). Ultrapassa as duas hastes em 17 u.
+- **E** (85 u): quatro faixas de 20 u — barra vermelha (0–20), respiro (20–40), braço do meio 74 u (40–60),
+  respiro (60–80), braço inferior 85 u (80–100); haste de 26 u ligando do meio à base.
+- **C** (87 u): anel de cantos arredondados (externo 21 u, interno 11 u) com o lado direito aberto;
+  braços de 20 u, haste de 25 u, terminais cortados na vertical.
+- **A** (111 u): Λ sem travessão, ápice chanfrado de 24 u, pernas de 24 u, vértice interno em y 27,9.
+- **Espaçamento** (entre tintas): H→E 31 · E→E 18 · E→C 19 · C→A 8. Logotipo completo: 573 × 100 u.
+- **Símbolo**: só o H com o arco — caixa 148 × 100 u.
 
 ## Pranchas e proposta de site
 
@@ -118,6 +130,3 @@ pnpm catalog     # imprime o catálogo (famílias, motores, siglas) e avisos de 
 pnpm sheets      # dist/site/assinaturas-{escuro,claro}.png e icones.png — todos os produtos numa prancha
 pnpm proposal    # dist/site/home-proposta.html — proposta navegável da home do portal com os ícones reais
 ```
-
-A proposta de home é HTML puro com os SVGs de `dist/` embutidos; serve de referência para portar ao
-`heeca_site` (o componente `HeecaAppIcon` do `logo.tsx` desenha o mesmo ícone em React).

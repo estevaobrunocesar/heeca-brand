@@ -1,0 +1,46 @@
+{
+  "colors": {
+    "primary": "#E31B23",
+    "primaryHover": "#B90F19",
+    "black": "#15171A",
+    "graphite": "#30343A",
+    "textSecondary": "#667085",
+    "border": "#E5E7EB",
+    "surface": "#FFFFFF",
+    "surfaceWarm": "#F7F4EF"
+  },
+  "typography": {
+    "interface": "Inter",
+    "weights": [
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "logo": "custom wordmark"
+  },
+  "radius": {
+    "sm": "6px",
+    "md": "10px",
+    "lg": "16px",
+    "xl": "24px"
+  },
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    40,
+    48,
+    64
+  ],
+  "brand": {
+    "name": "HEECA",
+    "concept": "Tipografia Exclusiva",
+    "tagline": "Sistemas que fazem o seu negócio evoluir.",
+    "story": "HE = Heloísa; CA = Catharina"
+  }
+}
