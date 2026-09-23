@@ -43,20 +43,21 @@ const shelf = ORDER.filter((f) => byFam[f]).map((f) => `
 
 const html = `<title>Heeca — nova home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
-  :root{--ink:#0b0a0a;--ink-2:#3b3436;--muted:#6f6668;--paper:#f7f4f4;--paper-2:#efeaea;--line:#e2dada;--white:#fff;--brand:#e50914;--silver:#d4d6db}
+  /* tokens do handoff da marca (../tokens.css) */
+  :root{--ink:#15171A;--ink-2:#30343A;--muted:#667085;--paper:#F7F4EF;--paper-2:#EFEAE1;--line:#E5E7EB;--white:#fff;--brand:#E31B23;--brand-hover:#B90F19;--on-dark:#C9CBD1}
   *{box-sizing:border-box}html{scroll-behavior:smooth}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:Montserrat,ui-sans-serif,system-ui,sans-serif;font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
   h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
   .eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
 
   /* header */
-  .nav{position:sticky;top:0;z-index:10;background:rgba(11,10,10,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav{position:sticky;top:0;z-index:10;background:rgba(21,23,26,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
-  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;color:#cfc7c8}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;color:#C9CBD1}
   .nav .actions{display:flex;gap:10px;align-items:center}
   .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:11px 18px;font-weight:600;font-size:14px;border:1px solid transparent;transition:transform .15s,background .15s}
   .btn:hover{transform:translateY(-1px)}
@@ -71,16 +72,17 @@ const html = `<title>Heeca — nova home</title>
   .hero .eyebrow{color:#ff5a62}
   .hero h1{font-size:clamp(38px,5.4vw,66px);font-weight:300;line-height:1.06;margin-top:16px}
   .hero h1 b{font-weight:700;color:var(--brand)}
-  .hero p{color:#c9c1c2;font-size:clamp(16px,1.4vw,19px);max-width:52ch;margin:22px 0 30px}
+  .hero p{color:#C9CBD1;font-size:clamp(16px,1.4vw,19px);max-width:52ch;margin:22px 0 30px}
   .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
   .hero .note{color:#8a8283;font-size:13px;margin-top:16px}
-  .hero-art{display:grid;justify-items:center}
+  /* min-width:0 evita que o logotipo (5,7:1) estoure a coluna do grid */
+  .hero-art{display:grid;justify-items:center;min-width:0}
   .hero-art svg{width:min(100%,560px);height:auto}
   .hero-icons{display:flex;gap:10px;margin-top:34px;flex-wrap:wrap;justify-content:center;max-width:560px}
   .hero-icons svg{width:44px;height:44px;border-radius:11px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 
   /* números */
-  .band{background:#141112;color:#e9e2e3;border-top:1px solid rgba(255,255,255,.06)}
+  .band{background:#1E2126;color:#E5E7EB;border-top:1px solid rgba(255,255,255,.06)}
   .band .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;padding-block:28px}
   .band b{display:block;font-size:30px;font-weight:600;letter-spacing:-.03em;color:#fff}
   .band span{font-size:13px;color:#a39a9b}
@@ -113,12 +115,12 @@ const html = `<title>Heeca — nova home</title>
   .engines .head{display:grid;gap:12px;max-width:62ch;margin-bottom:40px}
   .engines .eyebrow{color:#ff5a62}
   .engines h2{font-size:clamp(28px,3.4vw,42px);font-weight:600;line-height:1.1}
-  .engines p{margin:0;color:#c9c1c2;font-size:17px}
+  .engines p{margin:0;color:#C9CBD1;font-size:17px}
   .engine-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
   .engine{background:var(--ink);padding:26px 24px;display:grid;gap:8px;align-content:start}
   .engine b{font-size:22px;font-weight:600;letter-spacing:-.02em}
-  .engine b em{font-style:normal;color:var(--silver);font-weight:300}
-  .engine span{color:#c9c1c2;font-size:14px}
+  .engine b em{font-style:normal;color:var(--on-dark);font-weight:400}
+  .engine span{color:#C9CBD1;font-size:14px}
   .engine small{color:#8a8283;font-size:12.5px;letter-spacing:.02em}
 
   /* como funciona */
@@ -131,10 +133,10 @@ const html = `<title>Heeca — nova home</title>
   .step b{font-size:19px;font-weight:600;letter-spacing:-.02em}.step p{margin:0;color:var(--ink-2);font-size:14.5px}
 
   /* cta final */
-  .final{background:linear-gradient(180deg,#141112,var(--ink));color:#fff;padding-block:clamp(64px,8vw,110px);text-align:center}
+  .final{background:linear-gradient(180deg,#1E2126,var(--ink));color:#fff;padding-block:clamp(64px,8vw,110px);text-align:center}
   .final .sym svg{width:120px;height:auto;margin:0 auto 26px;display:block}
   .final h2{font-size:clamp(30px,4vw,50px);font-weight:300;line-height:1.08}.final h2 b{font-weight:700;color:var(--brand)}
-  .final p{color:#c9c1c2;max-width:50ch;margin:18px auto 30px}
+  .final p{color:#C9CBD1;max-width:50ch;margin:18px auto 30px}
   footer{background:var(--ink);color:#8a8283;border-top:1px solid rgba(255,255,255,.08);font-size:13px}
   footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;align-items:center}
   footer svg{height:30px;width:auto}
