@@ -7,7 +7,8 @@
     "build": "node build.mjs",
     "catalog": "node products.mjs",
     "sheets": "node scripts/lockup-sheet.mjs dist/site/assinaturas-escuro.png on-dark && node scripts/lockup-sheet.mjs dist/site/assinaturas-claro.png light && node scripts/contact-sheet.mjs dist/site/icones.png",
-    "proposal": "node scripts/site-proposal.mjs dist/site/home-proposta.html"
+    "proposal": "node scripts/site-proposal.mjs dist/site/home-proposta.html",
+    "assets": "node scripts/sync-assets.mjs"
   },
   "devDependencies": {
     "lucide-static": "^1.47.0",

@@ -15,6 +15,10 @@ Os SVGs que vieram no zip do handoff são um rascunho (arco em S, letras fora de
 deste kit foi **medida pixel a pixel no painel aprovado** (`reference/conceito_tipografia_exclusiva.png`) —
 proporções, pesos e espaçamento vêm de lá.
 
+> **Conceito único.** Este é o único conceito de marca da Heeca e dos seus sistemas. Os estudos
+> anteriores (símbolo H+C com swoosh; "Pessoas", com duas figuras) foram descartados e removidos do
+> repositório em 23/09/2026 — não reintroduza nenhum deles em arte, código ou material.
+
 - Briefing para a equipe de design (refino das curvas, render 3D, motion): [BRIEF-DESIGN.md](BRIEF-DESIGN.md)
 
 ## Fonte da verdade
@@ -29,11 +33,12 @@ proporções, pesos e espaçamento vêm de lá.
 | `logo.tsx` | **Gerado.** Componente React (`Logo`, `HeecaWordmark`, `HeecaSymbol`, `HeecaAppIcon`, `LogoIntro`) — copiado para cada projeto |
 | `tokens.css` | Tokens do handoff como custom properties |
 | `fonts/` | Inter 400/600 (OFL) — só para converter nome do produto e slogan em curvas. O logotipo não usa fonte |
-| `reference/` | Painel aprovado, kit original do handoff e os painéis anteriores (histórico) |
+| `reference/` | Painel aprovado e o kit original do handoff — **única** referência válida da marca |
 
 ```bash
 pnpm install
 pnpm build          # regenera dist/ e logo.tsx
+pnpm assets         # sincroniza favicon/ícones dos projetos sem script próprio (--check só confere)
 ```
 
 Produto novo = **uma linha em `products.csv`** (`key` = slug de código/URL/arquivos, `name` = nome comercial de
