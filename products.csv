@@ -20,5 +20,6 @@ build,Build,home,Project,soon,Reformas · construção · pintura · marcenaria 
 atelier,Atelier,fashion,Project,soon,Costureiras · alfaiates · ateliês · ajustes · bordados · personalização · confecção · moda sob medida,,shirt,absorve Sew Tailor Dress Embroidery Print Custom Fashion
 event,Event,events,Project,soon,Organizadores · decoradores · cerimonialistas · festas · casamentos · locação · som · estruturas,,party-popper,absorve Party Wedding Sound Rental
 studio,Studio,events,Studio,soon,Fotógrafos · videomakers · estúdios · criadores · produção audiovisual,Su,camera,absorve Photo Video
-class,Class,education,Schedule,soon,Professores · reforço · idiomas · música · dança · arte · cursos · aulas particulares,,graduation-cap,absorve Tutor Music Language Dance Art Training Academy Kids
+class,Class,education,Schedule,soon,Professores · reforço · idiomas · música · dança · arte · cursos · aulas particulares,,graduation-cap,absorve Tutor Music Language Dance Art Training Academy
 store,Store,commerce,Commerce,live,Lojas · boutique · roupas · calçados · presentes · floriculturas · autopeças · papelaria · pequenos comércios,,shopping-bag,
+kids,Kids,childcare,Schedule,soon,Creches · berçários · educação infantil · gestão de matrículas e turmas,,baby,gestão de creche/berçário (check-in/check-out de crianças por responsável autorizado)
