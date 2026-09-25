@@ -2,7 +2,7 @@ key,name,family,engine,status,audience,sigla,icon,note
 heeca,,platform,Core,live,Plataforma heeca.com.br,,,
 ticket,Ticket,ops,Ticket,live,Service desk para PMEs,,ticket,
 invoice,Invoice,finance,Invoice,live,Orçamentos e propostas,,receipt,
-beauty,Beauty,beauty,Schedule,live,Cabeleireiros · barbearias · manicure e pedicure · nail designers · lash · brow · esteticistas · maquiadores · studios de beleza,,sparkles,absorve Cut Barber Nail Lash Brow Skin Make (segmentos)
+beauty,Beauty,beauty,Schedule,live,Cabeleireiros · manicure e pedicure · nail designers · lash · brow · esteticistas · studios de beleza,,sparkles,absorve Nail Lash Brow Skin (segmentos)
 wellness,Wellness,beauty,Schedule,live,Spa · massagem · massoterapia · relaxamento · terapias corporais,,leaf,absorve Spa e Massage
 bronze,Bronze,beauty,Schedule,soon,Bronzeamento artificial e natural,,sun,
 ink,Ink,beauty,Schedule,soon,Tatuadores e studios de tatuagem,Ink,pen-tool, (era Tattoo)
@@ -24,3 +24,5 @@ class,Class,education,Schedule,soon,Professores · reforço · idiomas · músic
 store,Store,commerce,Commerce,live,Lojas · boutique · roupas · calçados · presentes · floriculturas · autopeças · papelaria · pequenos comércios,,shopping-bag,
 kids,Kids,childcare,Schedule,soon,Creches · berçários · educação infantil · gestão de matrículas e turmas,,baby,gestão de creche/berçário (check-in/check-out de crianças por responsável autorizado)
 adv,ADV,legal,Service,soon,Advogados · escritórios de advocacia · consultoria jurídica · contratos e processos,,scale,
+cut,Cut,beauty,Schedule,soon,Barbearias · barbeiros · corte masculino · barba · sobrancelha,,scissors,
+make,Make,beauty,Schedule,soon,Maquiadores · maquiagem para noivas · eventos e formaturas · make social,,palette,
