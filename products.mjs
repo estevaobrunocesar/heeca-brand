@@ -37,6 +37,7 @@ export const FAMILIES = {
   education: { label: "Educação", color: "#1e3a8a", onDark: "#7c9cf5" },
   commerce: { label: "Comércio", color: "#6d28d9", onDark: "#a883f7" },
   childcare: { label: "Creches e educação infantil", color: "#92710f", onDark: "#92710f" },
+  legal: { label: "Advocacia e serviços jurídicos", color: "#7a3d1f", onDark: "#d18661" },
 };
 /** Motores (arquitetura, não produto): cada produto declara o seu na coluna engine do CSV. */
 export const ENGINES = ["Core", "Schedule", "Health", "Commerce", "Service", "Project", "Studio", "Ticket", "Invoice"];
