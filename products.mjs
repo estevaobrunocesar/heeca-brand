@@ -40,7 +40,7 @@ export const FAMILIES = {
   legal: { label: "Advocacia e serviços jurídicos", color: "#7a3d1f", onDark: "#d18661" },
 };
 /** Motores (arquitetura, não produto): cada produto declara o seu na coluna engine do CSV. */
-export const ENGINES = ["Core", "Schedule", "Health", "Commerce", "Service", "Project", "Studio", "Ticket", "Invoice"];
+export const ENGINES = ["Core", "Schedule", "Health", "Commerce", "Service", "Project", "Studio", "Ticket", "Invoice", "Finance"];
 
 function parseCsv(text) {
   const [head, ...lines] = text.trim().split(/\r?\n/);
