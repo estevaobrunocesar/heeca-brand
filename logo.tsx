@@ -43,6 +43,7 @@ export const HEECA_PICTOGRAMS: Partial<Record<string, string>> = {
   "cut": "<circle cx=\"6\" cy=\"6\" r=\"3\" />\n  <path d=\"M8.12 8.12 12 12\" />\n  <path d=\"M20 4 8.12 15.88\" />\n  <circle cx=\"6\" cy=\"18\" r=\"3\" />\n  <path d=\"M14.8 14.8 20 20\" />",
   "make": "<path d=\"M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z\" />\n  <circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" />\n  <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />",
   "assist": "<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\" />\n  <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\" />",
+  "guard": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />\n  <path d=\"m9 12 2 2 4-4\" />",
 };
 
 /** Famílias (a cor é da família; os produtos herdam). Fonte: brand/products.mjs. */
@@ -95,6 +96,7 @@ export const HEECA_PRODUCTS = {
   "cut": { name: "Cut", color: "#c8306f", fullName: "Heeca Cut", colorOnDark: "#c8306f", family: "beauty", engine: "Schedule", sigla: "Cu" },
   "make": { name: "Make", color: "#c8306f", fullName: "Heeca Make", colorOnDark: "#c8306f", family: "beauty", engine: "Schedule", sigla: "Ma" },
   "assist": { name: "Assist", color: "#0f8a5f", fullName: "Heeca Assist", colorOnDark: "#0f8a5f", family: "finance", engine: "Finance", sigla: "As" },
+  "guard": { name: "Guard", color: "#0a6ee6", fullName: "Heeca Guard", colorOnDark: "#0a6ee6", family: "ops", engine: "Schedule", sigla: "Gu" },
 } as const;
 export type HeecaProduct = keyof typeof HEECA_PRODUCTS;
 export const SLOGAN = "Sistemas que fazem o seu negócio evoluir.";
